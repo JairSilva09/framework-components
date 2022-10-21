@@ -8,6 +8,8 @@ import { Component, Input, OnInit } from '@angular/core';
 export class BoxesComponent implements OnInit {
 
   @Input() numLoops: any= 1;
+  @Input() title: any= "";
+  @Input() description: any= "";
 
   boxes: any[] = [];
 

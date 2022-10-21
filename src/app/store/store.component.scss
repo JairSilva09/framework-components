@@ -1,0 +1,44 @@
+.full-container {
+    display: flex;
+    flex-direction: column;
+  
+    .header {
+      height: 70px;
+      // border: 1px violet solid;
+      background-color: red;
+    }
+    .content-wrapper {
+      background-color: blueviolet;
+      display: flex;
+      width: 100%;
+      height: 100%;
+      .side-menu {
+        background-color: lightblue;
+        // border: red solid 2px;
+        width: 330px;
+        height: auto;
+      }
+      .main-content {
+        background-color: lightgreen;
+        // border: green solid 1px;
+        width: -webkit-fill-available;
+        height: 90vh;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-right: 250px;
+  
+        .content{
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+          background-color: pink;
+        }
+  
+    
+      }
+    }
+  }

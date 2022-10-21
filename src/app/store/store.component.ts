@@ -1,15 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-store',
+  templateUrl: './store.component.html',
+  styleUrls: ['./store.component.scss']
 })
-export class AppComponent implements OnInit {
-  
+export class StoreComponent implements OnInit {
   numItems: number= 10;
-  title = 'framework-components';
   ITEMS: any[] = [];
+
+  constructor() { }
 
   ngOnInit(): void {
     this.loopItems(this.numItems);
@@ -25,4 +25,5 @@ export class AppComponent implements OnInit {
       )    
     }
   }
+
 }
