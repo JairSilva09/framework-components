@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-boxes',
@@ -7,9 +7,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BoxesComponent implements OnInit {
 
+  @Input() numLoops: any= 1;
+
+  boxes: any[] = [];
+
   constructor() { }
 
   ngOnInit(): void {
+    this.loopsBoxes(this.numLoops);
   }
+
+  loopsBoxes(i: any){
+    let x = Number(i);
+    for (let index = 0; index < i; index++) {
+      this.boxes.push("box")    
+    }
+  }  
 
 }
