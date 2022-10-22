@@ -20,7 +20,8 @@ export class StoreComponent implements OnInit {
       this.ITEMS.push(
         {
           "title": "Item "+(index+1),
-          "description": "this is a description of the item "+(index+1)
+          "description": "this is a description of the item "+(index+1),
+          "image": "https://api.lorem.space/image/shoes?w=150&h=150"
         }        
       )    
     }

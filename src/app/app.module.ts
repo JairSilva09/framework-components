@@ -7,13 +7,15 @@ import { BoxesComponent } from './boxes/boxes.component';
 import { ItemComponent } from './item/item.component';
 import { FormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
+import { ItemCardComponent } from './item-card/item-card.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoxesComponent,
     ItemComponent,
-    StoreComponent
+    StoreComponent,
+    ItemCardComponent
   ],
   imports: [
     BrowserModule,

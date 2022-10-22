@@ -8,12 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 
 export class ItemComponent implements OnInit {
 
-  @Input() title: any= "";
-  @Input() description: any= "";
+  @Input() item: any= "";
+  //@Input() description: any= "";
 
   constructor() { }
 
   ngOnInit(): void {
+ 
   }
 
 }

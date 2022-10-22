@@ -4,7 +4,7 @@
       <div class="side-menu"></div>
       <div class="main-content">
         <div class="content">
-            <app-item *ngFor="let item of ITEMS" title="{{item.title}}" description="{{item.description}}" ></app-item>
+            <app-item *ngFor="let item of ITEMS" [item]="item"></app-item>
         </div>
       </div>
       <div class="side-menu"></div>
