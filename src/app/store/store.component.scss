@@ -33,10 +33,11 @@
         margin-right: 250px;
   
         .content{
+          width: 100%;
           display: flex;
-          align-items: center;
+          // align-items: center;
           // justify-content: center;
-          // flex-direction: column;
+          flex-direction: column;
           flex-wrap: wrap;
           background-color: pink;
         }
