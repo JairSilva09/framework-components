@@ -11,7 +11,7 @@ import { ItemCardComponent } from './item-card/item-card.component';
 import { CrudeComponentComponent } from './crude-component/crude-component.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { TokeInterceptor } from './store/token.interceptor';
+import { TokeInterceptor } from './crude-component/token.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
