@@ -8,6 +8,7 @@ import { ItemComponent } from './item/item.component';
 import { FormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
 import { ItemCardComponent } from './item-card/item-card.component';
+import { CrudeComponentComponent } from './crude-component/crude-component.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { ItemCardComponent } from './item-card/item-card.component';
     BoxesComponent,
     ItemComponent,
     StoreComponent,
-    ItemCardComponent
+    ItemCardComponent,
+    CrudeComponentComponent
   ],
   imports: [
     BrowserModule,

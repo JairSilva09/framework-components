@@ -1,0 +1,116 @@
+<div class="container-fluid">
+    <div class="row my-3">
+        <div class="col.md.12">
+            <button (click)="showTable('wireless_device')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
+            <button (click)="showTable('phone_manufacturers')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
+            <button (click)="showTable('devide_type')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
+            
+            <button *ngIf="table_wireless_device" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+            <button *ngIf="table_phone_manufacturers" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
+            <button *ngIf="table_devide_type" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col.md.12">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th *ngFor="let th of TH" scope="col">{{th}}</th>                    
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of TR">                   
+                    <td *ngFor="let column of COLUMNS">{{item[column]}}</td>                   
+                  </tr>                               
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>  
+<!-- Modal wireless-->
+<div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add wireless device</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
+                <div class="input-group mb-3">                    
+                    <select class="form-select" id="inputGroupSelect01" #manufacturer (change)="onSelectedManufacturer()">
+                      <option selected>Choose...</option>                      
+                      <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Device name</label>
+                <input type="email" [(ngModel)]="wirelessDevicesForm.device_name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Device type</label>
+                <div class="input-group mb-3">                    
+                    <select class="form-select" id="inputGroupSelect01" #deviceType (change)="onSelectedDeviceType()">
+                      <option selected>Choose...</option>                      
+                      <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
+                    </select>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+                <textarea class="form-control" [(ngModel)]="wirelessDevicesForm.description" id="exampleFormControlTextarea1" rows="3"></textarea>
+            </div>                             
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="addItem(wirelessDevicesForm)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Modal phone manufacturers-->
+<div class="modal fade" id="phoneManufacturers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add phone manufacturer</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <span class="input-group-text">Id</span>
+                <input type="text" [(ngModel)]="phoneManufacturersForm.id" aria-label="First name" class="form-control">
+                <span class="input-group-text">Name</span>
+                <input type="text" [(ngModel)]="phoneManufacturersForm.name" aria-label="Last name" class="form-control">
+            </div>          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="addItem(phoneManufacturersForm)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+<!-- Modal device types-->
+<div class="modal fade" id="devideType" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Add device type</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          device types
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save</button>
+        </div>
+      </div>
+    </div>
+</div>
+
+
+
