@@ -9,6 +9,10 @@ import { FormsModule } from '@angular/forms';
 import { StoreComponent } from './store/store.component';
 import { ItemCardComponent } from './item-card/item-card.component';
 import { CrudeComponentComponent } from './crude-component/crude-component.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TokeInterceptor } from './store/token.interceptor';
+import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -22,9 +26,14 @@ import { CrudeComponentComponent } from './crude-component/crude-component.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [ {
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokeInterceptor,
+    multi: true,
+  }, { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 1000 } }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

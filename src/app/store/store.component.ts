@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { StoreService } from './store.service';
 
 @Component({
   selector: 'app-store',
@@ -8,11 +10,30 @@ import { Component, OnInit } from '@angular/core';
 export class StoreComponent implements OnInit {
   numItems: number= 10;
   ITEMS: any[] = [];
+  istokenReady = false;
 
-  constructor() { }
+  constructor(private storeService:StoreService, private _snackBar: MatSnackBar,) { }
 
   ngOnInit(): void {
     this.loopItems(this.numItems);
+    setTimeout(() => {
+      this.storeService.getToken().subscribe({
+        next: (token: any) => {
+          localStorage.setItem('token', token.token);
+        },
+        error: (err) => {
+          console.log(err);
+          console.error('Error getting token');
+          this._snackBar.open('Error getting token', 'Close', {
+            duration: 6000,
+          });
+          this.istokenReady = false;
+        },
+        complete: () => {
+          console.log('token complete');
+        }
+      })
+    }, 500);
   }
 
   loopItems(i: number){    
