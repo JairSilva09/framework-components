@@ -5,9 +5,9 @@
             <button (click)="showTable('phone_manufacturers')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
             <button (click)="showTable('devide_type')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
-            <button *ngIf="table_wireless_device" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
-            <button *ngIf="table_phone_manufacturers" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
-            <button *ngIf="table_devide_type" type="button" data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="Add item" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
+            <button *ngIf="table_wireless_device" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+            <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
+            <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
         </div>
     </div>
     <div class="row">
@@ -21,8 +21,10 @@
                 <tbody>
                   <tr *ngFor="let item of TR">                   
                     <td *ngFor="let column of COLUMNS">{{item[column]}}</td>
-                    <td><button type="button" class="btn btn-info btn-sm">Edit</button></td>
-                    <td><button (dblclick)="delete(item.id)" type="button" class="btn btn-danger btn-sm">Delete</button></td>                   
+                    <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
+                    <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
+                    <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
+                    <td><button  (dblclick)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
                   </tr>                               
                 </tbody>
             </table>
@@ -41,7 +43,7 @@
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
                 <div class="input-group mb-3">                    
-                    <select class="form-select" id="inputGroupSelect01" #manufacturer>
+                    <select class="form-select" [(ngModel)]="wirelessDevicesForm.manufacturer_id" id="inputGroupSelect01" #manufacturer>
                       <option selected>Choose...</option>                      
                       <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
@@ -54,7 +56,7 @@
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Device type</label>
                 <div class="input-group mb-3">                    
-                    <select class="form-select" id="inputGroupSelect01" #deviceType>
+                    <select class="form-select" [(ngModel)]="wirelessDevicesForm.device_type" id="inputGroupSelect01" #deviceType>
                       <option selected>Choose...</option>                      
                       <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
@@ -66,8 +68,8 @@
             </div>                             
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button (click)="addItem(wirelessDevicesForm)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Save</button>
+          <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="addItem()" data-bs-dismiss="modal" type="button" class="btn btn-primary">{{action}}</button>
         </div>
       </div>
     </div>
@@ -89,8 +91,8 @@
             </div>          
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button (click)="addItem(phoneManufacturersForm)" data-bs-dismiss="modal" type="button" class="btn btn-primary">Save</button>
+          <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="addItem()" data-bs-dismiss="modal" type="button" class="btn btn-primary">{{action}}</button>
         </div>
       </div>
     </div>
@@ -111,7 +113,7 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button (click)="addItem(deviceTypeForm)" type="button" class="btn btn-primary">Save</button>
+          <button (click)="addItem()" data-bs-dismiss="modal" type="button" class="btn btn-primary">{{action}}</button>
         </div>
       </div>
     </div>

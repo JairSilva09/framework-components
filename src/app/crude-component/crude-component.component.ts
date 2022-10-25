@@ -18,6 +18,8 @@ export class CrudeComponentComponent implements OnInit {
   TR: any[]=[];
   COLUMNS: any[]=[]; 
 
+  action: any = "Save"
+
   phoneManufacturersForm: any = {
     id: '',
     name: '',
@@ -262,49 +264,92 @@ export class CrudeComponentComponent implements OnInit {
     }
   }
 
-  addItem(nameForm: any){  
-
+  addItem(){ 
     let date = new Date().toISOString();
-    
-    if(this.table_phone_manufacturers){
-      this.phone_manufacturers_data.push(
-        {
-          "id": this.phoneManufacturersForm.id,
-          "name": this.phoneManufacturersForm.name,
-          "insert_date":date,
-          "active":1
-        }
-      )
-    }
 
-    if(this.table_wireless_device){
-      let id = this.wireless_device_data.length + 1
-      this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value; 
-      this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;     
-           
-      this.wireless_device_data.push(
-        {
-          "id": id.toString(),
-          "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
-          "device_name": this.wirelessDevicesForm.device_name,
-          "device_type": this.wirelessDevicesForm.device_type,
-          "description":this.wirelessDevicesForm.description,
-          "insert_date": date,
-          "active":1
-        }
+    if(this.action == "Update"){   
+
+      if(this.table_wireless_device){
+        this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value; 
+        this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value; 
+
+        this.wireless_device_data.forEach((item)=>{
+          if(item.id == this.wirelessDevicesForm.id){
+            item.manufacturer_id = this.wirelessDevicesForm.manufacturer_id;
+            item.device_name = this.wirelessDevicesForm.device_name;
+            item.device_type = this.wirelessDevicesForm.device_type;
+            item.description = this.wirelessDevicesForm.description;
+            item.insert_date = date;            
+          }          
+        })
+
+      }
+
+      if(this.table_devide_type){
+
+        this.device_type_data.forEach((item)=>{
+          if(item.id == this.deviceTypeForm.id){
+            item.name = this.deviceTypeForm.name;
+            item.insert_date = date;            
+          }
+        })
+  
+      }
+
+      if(this.table_phone_manufacturers){
       
-      )
-    }
+        this.phone_manufacturers_data.forEach((item)=>{
+          if(item.id == this.phoneManufacturersForm.id){
+            item.name = this.phoneManufacturersForm.name;
+            item.insert_date = date;          
+          }
+         
+        })
+  
+      }
 
-    if(this.table_devide_type){
-      let id = this.device_type_data.length + 1
-      this.device_type_data.push(
-        {
-          "id": id.toString(),
-          "name":this.deviceTypeForm.name,
-          "insert_date":date,
-        }      
-      )
+    }else{
+
+      if(this.table_phone_manufacturers){
+        this.phone_manufacturers_data.push(
+          {
+            "id": this.phoneManufacturersForm.id,
+            "name": this.phoneManufacturersForm.name,
+            "insert_date":date,
+            "active":1
+          }
+        )
+      }
+  
+      if(this.table_wireless_device){
+        let id = this.wireless_device_data.length + 1
+        this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value; 
+        this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;     
+             
+        this.wireless_device_data.push(
+          {
+            "id": id.toString(),
+            "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
+            "device_name": this.wirelessDevicesForm.device_name,
+            "device_type": this.wirelessDevicesForm.device_type,
+            "description":this.wirelessDevicesForm.description,
+            "insert_date": date,
+            "active":1
+          }
+        
+        )
+      }
+  
+      if(this.table_devide_type){
+        let id = this.device_type_data.length + 1
+        this.device_type_data.push(
+          {
+            "id": id.toString(),
+            "name":this.deviceTypeForm.name,
+            "insert_date":date,
+          }      
+        )
+      }
     }
   
   }  
@@ -345,6 +390,68 @@ export class CrudeComponentComponent implements OnInit {
 
     }
 
+  }
+
+  edit(id: any){
+    this.action = "Update"
+  
+    if(this.table_wireless_device){
+
+      this.wireless_device_data.forEach((item)=>{
+        if(item.id == id){
+          this.wirelessDevicesForm.id = item.id;
+          this.wirelessDevicesForm.device_name = item.device_name;
+          this.wirelessDevicesForm.device_type = item.device_type;
+          this.wirelessDevicesForm.description = item.description;
+          this.wirelessDevicesForm.insert_date = item.insert_date;         
+        }
+  
+      })
+
+    }
+    
+    if(this.table_devide_type){
+
+      this.device_type_data.forEach((item)=>{
+        if(item.id == id){
+          this.deviceTypeForm.id = item.id;
+          this.deviceTypeForm.name = item.name;
+          this.deviceTypeForm.insert_date = item.insert_date;
+        }
+      
+      })
+
+    }
+
+    if(this.table_phone_manufacturers){
+      
+      this.phone_manufacturers_data.forEach((item)=>{
+        if(item.id == id){
+          this.phoneManufacturersForm.id = item.id;
+          this.phoneManufacturersForm.name = item.name;
+          this.phoneManufacturersForm.insert_date = item.insert_date;
+          this.phoneManufacturersForm.active = item.active;
+        }
+      
+      })
+
+    }
+
+  }
+
+  close(){
+    this.action = 'Save';
+    this.reset();    
+  }
+
+  reset(){
+    this.phoneManufacturersForm.id = '';
+    this.phoneManufacturersForm.name = '';
+    this.phoneManufacturersForm.insert_date = '';
+    this.wirelessDevicesForm.device_name = '';
+    this.wirelessDevicesForm.device_type = '';
+    this.wirelessDevicesForm.manufacturer_id = '';
+    this.wirelessDevicesForm.description = '';
   }
   
 }
