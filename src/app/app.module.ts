@@ -13,6 +13,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokeInterceptor } from './crude-component/token.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
     CrudeComponentComponent
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     FormsModule,

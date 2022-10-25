@@ -1,4 +1,5 @@
 import { Component, OnInit,ViewChild,ElementRef,AfterViewInit  } from '@angular/core';
+import { StoreService } from './store.service';
 
 @Component({
   selector: 'app-crude-component',
@@ -229,12 +230,19 @@ export class CrudeComponentComponent implements OnInit {
   
   ]
 
-  constructor() { }
+  constructor(private storeService: StoreService ) { }
 
   ngOnInit(): void {
     this.TH = this.TH_WIRELESS_DEVICE; 
     this.TR = this.wireless_device_data;
-    this.COLUMNS = Object.keys(this.wireless_device_data[0]);    
+    this.COLUMNS = Object.keys(this.wireless_device_data[0]); 
+    
+    this.storeService.getDevice_type().subscribe(
+      (data) => {
+        console.log(data)
+      }
+    )
+    
   }
 
   showTable(table: any){

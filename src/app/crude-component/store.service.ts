@@ -27,6 +27,7 @@ export class StoreService {
   }
 
   getDevice_type() {
+    //debugger
     return this.http.get(environment.webBaseUrl + this._isgoe_device_type, httpOptions);
   }
 
