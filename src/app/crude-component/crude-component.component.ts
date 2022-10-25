@@ -25,6 +25,12 @@ export class CrudeComponentComponent implements OnInit {
     active: 1
   }
 
+  deviceTypeForm: any = {
+    id: '',
+    name: '',
+    insert_date: ''
+  }
+
   wirelessDevicesForm: any = {
     id: '',
     manufacturer_id: '',
@@ -52,7 +58,7 @@ export class CrudeComponentComponent implements OnInit {
       "id": "33269",
       "name":"Apple",
       "insert_date":"2022-10-21",
-      "active":1
+      "active":1,
     },
     {
       "id": "33270",
@@ -191,7 +197,7 @@ export class CrudeComponentComponent implements OnInit {
       "active":1
     },
     {
-      "id": "8",
+      "id": "9",
       "manufacturer_id": "33275",
       "device_name":"10",
       "device_type":"2",
@@ -229,14 +235,6 @@ export class CrudeComponentComponent implements OnInit {
     this.COLUMNS = Object.keys(this.wireless_device_data[0]);    
   }
 
-  onSelectedManufacturer():void {
-		this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
-	}
-
-  onSelectedDeviceType():void {
-		this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
-	}
-
   showTable(table: any){
     if(table == "wireless_device"){
       this.table_devide_type = false;
@@ -264,29 +262,89 @@ export class CrudeComponentComponent implements OnInit {
     }
   }
 
-  addItem(nameForm: any){    
-    nameForm.insert_date = new Date().toISOString();
+  addItem(nameForm: any){  
+
+    let date = new Date().toISOString();
     
     if(this.table_phone_manufacturers){
-
       this.phone_manufacturers_data.push(
-        nameForm
+        {
+          "id": this.phoneManufacturersForm.id,
+          "name": this.phoneManufacturersForm.name,
+          "insert_date":date,
+          "active":1
+        }
       )
     }
 
     if(this.table_wireless_device){
-      let id = this.wireless_device_data.length
-
-      nameForm.id = id.toString();
-
-      console.log(nameForm)
+      let id = this.wireless_device_data.length + 1
+      this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value; 
+      this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;     
            
       this.wireless_device_data.push(
-        nameForm
+        {
+          "id": id.toString(),
+          "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
+          "device_name": this.wirelessDevicesForm.device_name,
+          "device_type": this.wirelessDevicesForm.device_type,
+          "description":this.wirelessDevicesForm.description,
+          "insert_date": date,
+          "active":1
+        }
+      
+      )
+    }
+
+    if(this.table_devide_type){
+      let id = this.device_type_data.length + 1
+      this.device_type_data.push(
+        {
+          "id": id.toString(),
+          "name":this.deviceTypeForm.name,
+          "insert_date":date,
+        }      
       )
     }
   
   }  
 
+  delete(id: any){
+    let count = 0
+
+    if(this.table_wireless_device){
+
+      this.wireless_device_data.forEach((item)=>{
+        if(item.id == id){
+          this.wireless_device_data.splice(count, 1);
+        }
+        count++;
+      })
+
+    }
+    
+    if(this.table_devide_type){
+
+      this.device_type_data.forEach((item)=>{
+        if(item.id == id){
+          this.device_type_data.splice(count, 1);
+        }
+        count++;
+      })
+
+    }
+
+    if(this.table_phone_manufacturers){
+      
+      this.phone_manufacturers_data.forEach((item)=>{
+        if(item.id == id){
+          this.phone_manufacturers_data.splice(count, 1);
+        }
+        count++;
+      })
+
+    }
+
+  }
   
 }

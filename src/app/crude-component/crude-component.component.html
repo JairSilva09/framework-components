@@ -20,7 +20,9 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let item of TR">                   
-                    <td *ngFor="let column of COLUMNS">{{item[column]}}</td>                   
+                    <td *ngFor="let column of COLUMNS">{{item[column]}}</td>
+                    <td><button type="button" class="btn btn-info btn-sm">Edit</button></td>
+                    <td><button (dblclick)="delete(item.id)" type="button" class="btn btn-danger btn-sm">Delete</button></td>                   
                   </tr>                               
                 </tbody>
             </table>
@@ -39,7 +41,7 @@
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
                 <div class="input-group mb-3">                    
-                    <select class="form-select" id="inputGroupSelect01" #manufacturer (change)="onSelectedManufacturer()">
+                    <select class="form-select" id="inputGroupSelect01" #manufacturer>
                       <option selected>Choose...</option>                      
                       <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
@@ -52,7 +54,7 @@
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Device type</label>
                 <div class="input-group mb-3">                    
-                    <select class="form-select" id="inputGroupSelect01" #deviceType (change)="onSelectedDeviceType()">
+                    <select class="form-select" id="inputGroupSelect01" #deviceType>
                       <option selected>Choose...</option>                      
                       <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
@@ -102,11 +104,14 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          device types
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="email" [(ngModel)]="deviceTypeForm.name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+            </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save</button>
+          <button (click)="addItem(deviceTypeForm)" type="button" class="btn btn-primary">Save</button>
         </div>
       </div>
     </div>
