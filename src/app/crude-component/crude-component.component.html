@@ -1,17 +1,42 @@
 <div class="container-fluid">
     <div class="row my-3">
-        <div class="col.md.12">
-            <button (click)="showTable('wireless_device')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
-            <button (click)="showTable('phone_manufacturers')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
-            <button (click)="showTable('devide_type')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
+        <div class="col-md-12">
+            <button (click)="get_wireless_device()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
+            <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
+            <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
-            <button *ngIf="table_wireless_device" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+            <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
             <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
             <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
         </div>
     </div>
+    <div class="row my-3">
+      <div class="col-md-4">
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
+        <div class="input-group mb-3">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">Filter</button>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#">Separated link</a></li>
+          </ul>
+          <input type="text" class="form-control" aria-label="Text input with dropdown button">
+        </div>              
+      </div>
+    </div>
     <div class="row">
-        <div class="col.md.12">
+        <div class="col-md-12">
             <table class="table">
                 <thead>
                   <tr>
@@ -24,7 +49,7 @@
                     <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
                     <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
                     <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
-                    <td><button  (dblclick)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
+                    <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
                   </tr>                               
                 </tbody>
             </table>
@@ -37,14 +62,14 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add wireless device</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
                 <div class="input-group mb-3">                    
                     <select class="form-select" [(ngModel)]="wirelessDevicesForm.manufacturer_id" id="inputGroupSelect01" #manufacturer>
-                      <option selected>Choose...</option>                      
+                      <option>{{wirelessDevicesForm.manufacturer_id}}</option>                                           
                       <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
                 </div>
@@ -57,7 +82,7 @@
                 <label for="exampleFormControlInput1" class="form-label">Device type</label>
                 <div class="input-group mb-3">                    
                     <select class="form-select" [(ngModel)]="wirelessDevicesForm.device_type" id="inputGroupSelect01" #deviceType>
-                      <option selected>Choose...</option>                      
+                      <option>{{wirelessDevicesForm.device_type}}</option>                                            
                       <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
                 </div>
@@ -80,12 +105,10 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add phone manufacturer</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="input-group">
-                <span class="input-group-text">Id</span>
-                <input type="text" [(ngModel)]="phoneManufacturersForm.id" aria-label="First name" class="form-control">
                 <span class="input-group-text">Name</span>
                 <input type="text" [(ngModel)]="phoneManufacturersForm.name" aria-label="Last name" class="form-control">
             </div>          
@@ -103,7 +126,7 @@
       <div class="modal-content">
         <div class="modal-header">
           <h1 class="modal-title fs-5" id="exampleModalLabel">Add device type</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="mb-3">
@@ -112,7 +135,7 @@
             </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
           <button (click)="addItem()" data-bs-dismiss="modal" type="button" class="btn btn-primary">{{action}}</button>
         </div>
       </div>
