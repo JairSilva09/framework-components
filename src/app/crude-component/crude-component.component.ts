@@ -304,10 +304,14 @@ export class CrudeComponentComponent implements OnInit {
 
         let newWirelessDevice = {
           "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
-          "device_name": this.wirelessDevicesForm.device_name,
+          "device_name": this.device_type_data.filter((item: any)=>{
+            if (item.name == this.wirelessDevicesForm.device_type)
+            return item
+          }).id,
           "device_type": this.wirelessDevicesForm.device_type,
           "description":this.wirelessDevicesForm.description,
-          "active":"1"         
+          "active":"1",
+          "id": this.wirelessDevicesForm.id        
         }
         
         this.storeService.putwireless_device(newWirelessDevice).subscribe({
@@ -343,7 +347,7 @@ export class CrudeComponentComponent implements OnInit {
         this.storeService.putDevice_type(newDeviceType).subscribe(
           (result: any) => {
             console.log(result)
-        
+            this. get_device_type();
           }
         );
 

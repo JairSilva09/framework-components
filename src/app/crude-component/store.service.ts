@@ -15,7 +15,7 @@ export class StoreService {
   private _isgoe_device_type = 'isgoe/device_type';
   private _isgoe_phone_manufacturer = 'isgoe/phone_manufacturer';
   private _isgoe_wireless_device = 'isgoe/wireless_device';
- 
+
   constructor(private http: HttpClient) { }
 
   getToken() {
@@ -26,7 +26,7 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + '/token', credentials);
   }
 
-  getDevice_type() { 
+  getDevice_type() {
     return this.http.get(environment.webBaseUrl + this._isgoe_device_type, httpOptions);
   }
 
@@ -38,16 +38,14 @@ export class StoreService {
   }
 
   putDevice_type(deviceId: any) {
-
-    // let device = {
-    //   "name": "new device"
-    // }   
-
-    return this.http.put(environment.webBaseUrl + this._isgoe_device_type + '/' + deviceId, httpOptions);
+    let device = {
+      "name": deviceId.name
+    }
+    return this.http.put(environment.webBaseUrl + this._isgoe_device_type + '/' + deviceId.id, device, httpOptions);
   }
 
-  deleteDevice_type(deviceId:any) {
-    return this.http.delete(environment.webBaseUrl + this._isgoe_device_type +  '/'+deviceId, httpOptions);
+  deleteDevice_type(deviceId: any) {
+    return this.http.delete(environment.webBaseUrl + this._isgoe_device_type + '/' + deviceId, httpOptions);
   }
 
   // manufacturer
@@ -63,11 +61,14 @@ export class StoreService {
   }
 
   putphone_manufacturer(deviceId: any) {
-    return this.http.put(environment.webBaseUrl + this._isgoe_phone_manufacturer + '/' + deviceId, httpOptions);
+    let name = {
+      "name": deviceId.name
+    }
+    return this.http.put(environment.webBaseUrl + this._isgoe_phone_manufacturer + '/' + deviceId.id, name, httpOptions);
   }
 
-  deletephone_manufacturer(deviceId: any) { 
-    return this.http.delete(environment.webBaseUrl + this._isgoe_phone_manufacturer +  '/'+deviceId, httpOptions);
+  deletephone_manufacturer(deviceId: any) {
+    return this.http.delete(environment.webBaseUrl + this._isgoe_phone_manufacturer + '/' + deviceId, httpOptions);
   }
 
   // wireless_device
@@ -76,7 +77,7 @@ export class StoreService {
   }
 
   postwireless_device(device: any) {
-    
+
     // let device = {
     //   "name": "Kalley"
     // }
@@ -84,12 +85,17 @@ export class StoreService {
   }
 
   putwireless_device(deviceId: any) {
-    return this.http.put(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId, httpOptions);
+    let name = {
+      "manufacturer_id": deviceId.manufacturer_id,
+      "device_type": deviceId.device_type,
+      "active": deviceId.active
+    }
+    return this.http.put(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId.id,name, httpOptions);
   }
 
   deletewireless_device(deviceId: any) {
     debugger
-    return this.http.delete(environment.webBaseUrl + this._isgoe_wireless_device +  '/'+deviceId, httpOptions);
+    return this.http.delete(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId, httpOptions);
   }
 
 }
