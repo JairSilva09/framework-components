@@ -49,9 +49,11 @@ export class CrudeComponentComponent implements OnInit {
 
   wirelessDevicesForm: any = {
     id: '',
-    manufacturer_id: 'Choose...',
+    manufacturer_id: '',
+    manufacturer_name: '',
     device_name: '',
-    device_type: 'Choose...',
+    device_type: '',
+    device_type_name: '',
     insert_date: '',
     description: '',
     active: 1
@@ -309,6 +311,7 @@ export class CrudeComponentComponent implements OnInit {
           "description":this.wirelessDevicesForm.description,
           "active":"1"         
         }
+        console.log(newWirelessDevice)
         
         this.storeService.putwireless_device(newWirelessDevice).subscribe({
           next: (data: any) => {
