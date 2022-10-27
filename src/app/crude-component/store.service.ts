@@ -86,6 +86,7 @@ export class StoreService {
 
   putwireless_device(deviceId: any) {
     let name = {
+      "device_name": deviceId.device_name,
       "manufacturer_id": deviceId.manufacturer_id,
       "device_type": deviceId.device_type,
       "active": deviceId.active
@@ -93,8 +94,7 @@ export class StoreService {
     return this.http.put(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId.id,name, httpOptions);
   }
 
-  deletewireless_device(deviceId: any) {
-    debugger
+  deletewireless_device(deviceId: any) {   
     return this.http.delete(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId, httpOptions);
   }
 

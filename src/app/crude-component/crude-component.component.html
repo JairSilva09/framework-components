@@ -10,18 +10,8 @@
             <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
         </div>
     </div>
-    <div class="row my-3">
-      <div class="col-md-4">
-        <div class="dropdown">
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
+    <div *ngIf="table_wireless_device" class="row my-3">
+      <div class="col-md-4">        
         <div class="input-group mb-3">
           <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">Filter</button>
           <ul class="dropdown-menu">
@@ -69,7 +59,7 @@
                 <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
                 <div class="input-group mb-3">                    
                     <select class="form-select" [(ngModel)]="wirelessDevicesForm.manufacturer_id" id="inputGroupSelect01" #manufacturer>
-                      <option>{{wirelessDevicesForm.manufacturer_id}}</option>                                           
+                      <option>{{wirelessDevicesForm.manufacturer_name}}</option>                                           
                       <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
                 </div>
@@ -82,7 +72,7 @@
                 <label for="exampleFormControlInput1" class="form-label">Device type</label>
                 <div class="input-group mb-3">                    
                     <select class="form-select" [(ngModel)]="wirelessDevicesForm.device_type" id="inputGroupSelect01" #deviceType>
-                      <option>{{wirelessDevicesForm.device_type}}</option>                                            
+                      <option>{{wirelessDevicesForm.device_type_name}}</option>                                            
                       <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
                     </select>
                 </div>
