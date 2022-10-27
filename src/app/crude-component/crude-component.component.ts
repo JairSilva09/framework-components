@@ -32,7 +32,9 @@ export class CrudeComponentComponent implements OnInit {
 
   action: any = "Save";
 
-  filter: string =  "Filter"
+  currentFilter: string =  "Filter"
+
+  itemsOptionsFilter: any = [];
 
   phoneManufacturersForm: any = {
     id: '',
@@ -603,6 +605,26 @@ export class CrudeComponentComponent implements OnInit {
   close(){
     this.action = 'Save';
     this.reset();    
+  }
+
+  selectedFilter(filter: string){
+    this.currentFilter = filter;
+    if(filter == "manufacturer"){
+      this.storeService.getphone_manufacturer().subscribe(
+        (data: any) => {
+          this.itemsOptionsFilter = data.data;  
+        }
+      )      
+    }
+
+    if(filter == "device type"){
+      this.storeService.getDevice_type().subscribe(
+        (data: any) => {
+          this.itemsOptionsFilter = data.data;  
+        }
+      )      
+    }
+        
   }
 
   reset(){

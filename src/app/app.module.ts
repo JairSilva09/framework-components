@@ -14,6 +14,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokeInterceptor } from './crude-component/token.interceptor';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
+import { PaginationComponent } from './pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { HttpClientModule } from '@angular/common/http';
     ItemComponent,
     StoreComponent,
     ItemCardComponent,
-    CrudeComponentComponent
+    CrudeComponentComponent,
+    PaginationComponent
   ],
   imports: [
     HttpClientModule,
