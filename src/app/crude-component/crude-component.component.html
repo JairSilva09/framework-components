@@ -11,8 +11,8 @@
         </div>
     </div>
     <div  class="d-flex justify-content-between row my-3">
-      <div *ngIf="table_wireless_device" class="col-md-4">        
-        <div class="input-group mb-3">
+      <div *ngIf="table_wireless_device" class="col-md-3">        
+        <!-- <div class="input-group mb-3">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedFilter('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
@@ -22,7 +22,12 @@
             <option selected>Open this select menu</option>
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
-        </div>              
+        </div>               -->
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+
       </div>
    
       <div class="col-md-2">
@@ -39,6 +44,10 @@
             <li><button (click)="chooseNumRows(100)" class="dropdown-item" type="button">100</button></li>            
           </ul>
         </div>
+      </div>
+      <div class="col-md-2">
+        <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>
+
       </div>
     </div>
     <div class="row">
@@ -58,8 +67,7 @@
                 <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
               </tr>                               
             </tbody>
-          </table>
-          <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>
+          </table>         
            
       </div>
     </div>
