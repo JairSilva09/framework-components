@@ -1,12 +1,15 @@
-
+<div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;">
+  <img src="assets/logo.jpg" style="cursor: auto;" (click)="goToUrl()"  alt=""> <h1>Wireless Data Drop Tool</h1>
+</div>
+<hr>
 <div class="container-fluid">
 
   <div class="row my-3">
     <div class="col-md-12">
       <nav class="nav">
-        <a class="nav-link active" aria-current="page" style="cursor: pointer" >Wireless device</a>
-        <a class="nav-link" href="#">Phone manufacturers</a>
-        <a class="nav-link" href="#">Device Type</a>
+        <a (click)="get_wireless_device('1')" class="nav-link active" aria-current="page" style="cursor: pointer">Wireless device</a>
+        <a (click)="get_phone_manufacturers()" class="nav-link" style="cursor: pointer">Phone manufacturers</a>
+        <a (click)="get_device_type()" class="nav-link" style="cursor: pointer">Device Type</a>
         
       </nav>
       <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
@@ -17,10 +20,9 @@
       <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
       <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> -->
     </div>
-  </div>
-  <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
-    <div  class="col-md-3">        
-        <!-- <div class="input-group mb-3">
+    <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
+      <div  class="col-md-3">        
+        <div class="input-group mb-3">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedFilter('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
@@ -30,15 +32,17 @@
             <option selected>Open this select menu</option>
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
-        </div>               -->
-      <div class="input-group mb-3">
-        <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
-        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>              
+        <!-- <div class="input-group mb-3">
+          <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
+          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div> -->
+
       </div>
 
     </div>
    
-    <div class="col-md-8">
+    <div *ngIf="table_wireless_device" class="col-md-8">
       <div class="row d-flex justify-content-end">
           <div class="col-md-2">
             <div class="dropdown">
@@ -82,7 +86,7 @@
               </tr>                               
             </tbody>
           </table>
-          <div class="row d-flex justify-content-end">
+          <div *ngIf="table_wireless_device" class="row d-flex justify-content-end">
             <div class = "col-md-2">
               <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>       
             </div>
@@ -94,11 +98,7 @@
       <h1 class="text-center">Infinity Sales Group</h1>
     </div>
   </div>
-</div>
-
-
-  
-  
+</div> 
 
 <!-- Modal wireless-->
 <div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

@@ -255,6 +255,8 @@ export class CrudeComponentComponent implements OnInit {
 
     this.storeService.getDevice_type().subscribe(
       (data: any) => {      
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
         this.TR = data.data;
         this.COLUMNS = this.COLUMNS_DEVICE_TYPE;
       }
@@ -263,6 +265,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_phone_manufacturers(){
+    console.log('manufacturer')
 
     this.table_devide_type = false;
     this.table_phone_manufacturers = true;
@@ -271,6 +274,8 @@ export class CrudeComponentComponent implements OnInit {
 
     this.storeService.getphone_manufacturer().subscribe(
       (data: any) => {
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
 
         let items = data.data;
         items.forEach((item: any)=>{
@@ -686,4 +691,7 @@ export class CrudeComponentComponent implements OnInit {
     this.deviceTypeForm.id = '';
   }
   
+  goToUrl(){
+    window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_blank');
+  }
 }
