@@ -2,3 +2,7 @@
 
 // html, body { height: 90%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.btn-info, .btn-info:hover, .btn-info:active, .btn-info:visited {
+    background-color: #0b62a5 !important;
+    color: white;
+}

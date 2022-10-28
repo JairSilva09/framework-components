@@ -16,9 +16,10 @@
       <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
       <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
+      -->
       <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
       <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
-      <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> -->
+      <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> 
     </div>
     <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
       <div  class="col-md-3">        
@@ -93,12 +94,14 @@
           </div> 
     </div>
   </div>
-  <div class="row my-5">
-    <div class="col-md-12">
-      <h3 class="text-center">Infinity Sales Group</h3>
-    </div>
-  </div>
 </div> 
+<div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;position: fixed;
+bottom: 0px;background-color: #e9ecef;">
+  <div class="col-md-12" >
+    <h4 class="text-center" style="font-size: 30px;">Infinity Sales Group</h4>
+  </div>
+</div>
+
 
 <!-- Modal wireless-->
 <div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -120,7 +123,7 @@
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Device name</label>
-                <input type="email" [(ngModel)]="wirelessDevicesForm.device_name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <input type="email" [(ngModel)]="wirelessDevicesForm.device_name" class="form-control" id="exampleFormControlInput1" placeholder="">
             </div>
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Device type</label>
@@ -175,7 +178,7 @@
         <div class="modal-body">
             <div class="mb-3">
                 <label for="exampleFormControlInput1" class="form-label">Name</label>
-                <input type="email" [(ngModel)]="deviceTypeForm.name" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                <input type="email" [(ngModel)]="deviceTypeForm.name" class="form-control" id="exampleFormControlInput1" placeholder="">
             </div>
         </div>
         <div class="modal-footer">
