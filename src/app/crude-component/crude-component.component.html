@@ -1,3 +1,7 @@
+<div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;">
+  <img src="assets/logo.jpg" style="cursor: auto;" (click)="goToUrl()"  alt=""> <h1>Wireless Data Drop Tool</h1>
+</div>
+<hr>
 <div class="container-fluid">
     <div class="row my-3">
         <div class="col-md-12">
@@ -12,7 +16,7 @@
     </div>
     <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
       <div  class="col-md-3">        
-        <!-- <div class="input-group mb-3">
+        <div class="input-group mb-3">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedFilter('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
@@ -22,11 +26,11 @@
             <option selected>Open this select menu</option>
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
-        </div>               -->
-        <div class="input-group mb-3">
+        </div>              
+        <!-- <div class="input-group mb-3">
           <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
           <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-        </div>
+        </div> -->
 
       </div>
    

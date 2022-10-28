@@ -686,4 +686,7 @@ export class CrudeComponentComponent implements OnInit {
     this.deviceTypeForm.id = '';
   }
   
+  goToUrl(){
+    window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_blank');
+  }
 }

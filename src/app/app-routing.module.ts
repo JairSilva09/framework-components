@@ -5,7 +5,7 @@ import { StoreComponent } from './store/store.component';
 
 const routes: Routes = [
   {path: 'crud',component: CrudeComponentComponent},
-  {path: 'store',component: StoreComponent},
+  // {path: 'store',component: StoreComponent},
   { path: '**', pathMatch: 'full', redirectTo: 'crud' },
 ];
 
