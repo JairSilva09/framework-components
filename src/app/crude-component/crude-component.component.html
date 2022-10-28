@@ -1,17 +1,25 @@
+
 <div class="container-fluid">
-    <div class="row my-3">
-        <div class="col-md-12">
-            <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
-            <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
-            <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
+
+  <div class="row my-3">
+    <div class="col-md-12">
+      <nav class="nav">
+        <a class="nav-link active" aria-current="page" style="cursor: pointer" >Wireless device</a>
+        <a class="nav-link" href="#">Phone manufacturers</a>
+        <a class="nav-link" href="#">Device Type</a>
+        
+      </nav>
+      <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
+      <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
+      <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
-            <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
-            <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
-            <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button>
-        </div>
+      <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+      <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
+      <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> -->
     </div>
-    <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
-      <div  class="col-md-3">        
+  </div>
+  <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
+    <div  class="col-md-3">        
         <!-- <div class="input-group mb-3">
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
@@ -23,15 +31,15 @@
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
         </div>               -->
-        <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
-          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-        </div>
-
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
+        <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
       </div>
+
+    </div>
    
-      <div class="col-md-8">
-        <div class="row d-flex justify-content-end">
+    <div class="col-md-8">
+      <div class="row d-flex justify-content-end">
           <div class="col-md-2">
             <div class="dropdown">
               <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
@@ -58,7 +66,7 @@
     </div>
     <div class="row">
       <div class="col-md-12">
-          <table class="table table-striped table-hover">
+          <table class="table table-hover">
             <thead>
               <tr>
                 <th *ngFor="let th of TH" scope="col">{{th}}</th>                    
@@ -73,11 +81,25 @@
                 <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
               </tr>                               
             </tbody>
-          </table>         
-           
-      </div>
+          </table>
+          <div class="row d-flex justify-content-end">
+            <div class = "col-md-2">
+              <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>       
+            </div>
+          </div> 
     </div>
-</div>  
+  </div>
+  <div class="row my-5">
+    <div class="col-md-12">
+      <h1 class="text-center">Infinity Sales Group</h1>
+    </div>
+  </div>
+</div>
+
+
+  
+  
+
 <!-- Modal wireless-->
 <div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
