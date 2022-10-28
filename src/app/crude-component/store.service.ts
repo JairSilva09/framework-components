@@ -14,7 +14,7 @@ const httpOptions = {
 export class StoreService {
   private _isgoe_device_type = 'isgoe/device_type';
   private _isgoe_phone_manufacturer = 'isgoe/phone_manufacturer';
-  private _isgoe_wireless_device = 'isgoe/wireless_device';
+  private _isgoe_wireless_device = 'isgoe/wireless_device?page=';
 
   constructor(private http: HttpClient) { }
 
@@ -72,8 +72,10 @@ export class StoreService {
   }
 
   // wireless_device
-  getwireless_device() {
-    return this.http.get(environment.webBaseUrl + this._isgoe_wireless_device, httpOptions);
+  getwireless_device(page: string) {
+    let isgoe_wireless_device = 'isgoe/wireless_device?page=';
+    return this.http.get(environment.webBaseUrl + isgoe_wireless_device+page, httpOptions);   
+    //return this.http.get(environment.webBaseUrl + this._isgoe_wireless_device, httpOptions);
   }
 
   postwireless_device(device: any) {

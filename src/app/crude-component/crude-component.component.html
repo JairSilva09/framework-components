@@ -1,7 +1,7 @@
 <div class="container-fluid">
     <div class="row my-3">
         <div class="col-md-12">
-            <button (click)="get_wireless_device()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
+            <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
             <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
             <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
@@ -26,6 +26,7 @@
         </div>              
       </div>
     </div>
+    <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>
     <div class="row">
         <div class="col-md-12">
             <table class="table">
@@ -43,7 +44,7 @@
                     <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
                   </tr>                               
                 </tbody>
-            </table>
+            </table>            
         </div>
     </div>
 </div>  
