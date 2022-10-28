@@ -30,24 +30,31 @@
 
       </div>
    
-      <div class="col-md-2">
-        <div class="dropdown">
-          <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            {{numRows}}
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><button (click)="chooseNumRows(10)" class="dropdown-item" type="button">10</button></li>
-            <li><button (click)="chooseNumRows(20)" class="dropdown-item" type="button">20</button></li>
-            <li><button (click)="chooseNumRows(30)" class="dropdown-item" type="button">30</button></li>
-            <li><button (click)="chooseNumRows(40)" class="dropdown-item" type="button">40</button></li>
-            <li><button (click)="chooseNumRows(50)" class="dropdown-item" type="button">50</button></li>
-            <li><button (click)="chooseNumRows(100)" class="dropdown-item" type="button">100</button></li>            
-          </ul>
-        </div>
-      </div>
-      <div class="col-md-2">
-        <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>
+      <div class="col-md-8">
+        <div class="row d-flex justify-content-end">
+          <div class="col-md-2">
+            <div class="dropdown">
+              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                {{numRows}}
+              </button>
+              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                <li><button (click)="chooseNumRows(10)" class="dropdown-item" type="button">10</button></li>
+                <li><button (click)="chooseNumRows(20)" class="dropdown-item" type="button">20</button></li>
+                <li><button (click)="chooseNumRows(30)" class="dropdown-item" type="button">30</button></li>
+                <li><button (click)="chooseNumRows(40)" class="dropdown-item" type="button">40</button></li>
+                <li><button (click)="chooseNumRows(50)" class="dropdown-item" type="button">50</button></li>
+                <li><button (click)="chooseNumRows(100)" class="dropdown-item" type="button">100</button></li>            
+              </ul>
+            </div>
+          </div>
+          
+          <div class="col-md-3">
+            <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>         
 
+          </div>
+       
+        </div>
+        
       </div>
     </div>
     <div class="row">
