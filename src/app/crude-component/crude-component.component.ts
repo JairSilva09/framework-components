@@ -68,7 +68,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   TH_DEVICE_TYPE: any[]=[
-    "ID","Name","Insert Date"
+    "ID","Name","Insert Date","",""
   ];
 
   TH_WIRELESS_DEVICE: any[]=[
