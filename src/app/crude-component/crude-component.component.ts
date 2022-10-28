@@ -19,7 +19,7 @@ export class CrudeComponentComponent implements OnInit {
   TR: any=[];
   COLUMNS: any[]=[];
   COLUMNS_WIRELESS_DEVICE: any[]=[
-    "id","manufacturer_id","device_name","device_type","description","insert_date","active"
+    "id","manufacturer_name","device_name","device_type_name","description","insert_date","active"
   ]
   
   COLUMNS_DEVICE_TYPE: any[]=[
@@ -236,8 +236,8 @@ export class CrudeComponentComponent implements OnInit {
 
           //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
          
-          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
      
