@@ -3,7 +3,6 @@
 </div>
 <hr>
 <div class="container-fluid">
-
   <div class="row my-3">
     <div class="col-md-12">
       <nav class="nav">
@@ -12,18 +11,18 @@
         <a (click)="get_device_type()" class="nav-link" style="cursor: pointer" [ngClass]="{'tab_active': table_devide_type}">Device Type</a>
         
       </nav>
+    </div>
+  </div>
+
       <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
       <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
       <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
-      -->
-      <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
-      <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
-      <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> 
-    </div>
-    <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
-      <div  class="col-md-3" style="display: flex;gap: 10px;">        
-        <div class="input-group mb-3" style="width: 820px;" >
+      -->      
+  
+  <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
+    <div  class="col-md-5" style="display: flex;gap: 10px;">        
+      <div class="input-group mb-3" style="width: 820px;" >
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedFilter('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
@@ -33,68 +32,64 @@
             <option selected>Open this select menu</option>
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
-        </div>              
-        <div class="input-group mb-3" style="width: 820px;" >
+      </div>              
+      <div class="input-group mb-3" style="width: 820px;" >
           <span class="input-group-text" id="inputGroup-sizing-default">KeyWord</span>
           <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-        </div>
-
       </div>
-
     </div>
-   
-    <div *ngIf="table_wireless_device" class="col-md-8">
-      <div class="row d-flex justify-content-end">
-          <div class="col-md-2">
-            <div class="dropdown">
-              <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+    <div class="col-md-7">
+      <button *ngIf="table_wireless_device" (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+      <button *ngIf="table_phone_manufacturers" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
+      <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> 
+    </div>
+  </div>
+  <div *ngIf="table_wireless_device" class="row d-flex justify-content-center">
+    <div class="col-md-2">
+      <div class="dropdown">
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                 {{numRows}}
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                 <li><button (click)="chooseNumRows(10)" class="dropdown-item" type="button">10</button></li>
                 <li><button (click)="chooseNumRows(20)" class="dropdown-item" type="button">20</button></li>
                 <li><button (click)="chooseNumRows(30)" class="dropdown-item" type="button">30</button></li>
                 <li><button (click)="chooseNumRows(40)" class="dropdown-item" type="button">40</button></li>
                 <li><button (click)="chooseNumRows(50)" class="dropdown-item" type="button">50</button></li>
                 <li><button (click)="chooseNumRows(100)" class="dropdown-item" type="button">100</button></li>            
-              </ul>
-            </div>
-          </div>
-          
-          <div class="col-md-3">
-            <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>         
-          </div>
-       
-        </div>
-        
+        </ul>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <th *ngFor="let th of TH" scope="col">{{th}}</th>                    
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let item of TR">                   
-                <td *ngFor="let column of COLUMNS" style="min-width: 100px">{{item[column]}}</td>
-                <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
-                <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
-                <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
-                <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
-              </tr>                               
-            </tbody>
-          </table>
-          <div *ngIf="table_wireless_device" class="row d-flex justify-content-end">
-            <div class = "col-md-2">
-              <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>       
-            </div>
-          </div> 
+          
+    <div class="col-md-3">
+      <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>         
     </div>
   </div>
-</div> 
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th *ngFor="let th of TH" scope="col"><input *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..."><ng-template #normal>{{th}}</ng-template></th>                    
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of TR">                   
+            <td *ngFor="let column of COLUMNS" style="min-width: 100px"><input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="stateCheckbox(item[column])"><ng-template #normal>{{item[column]}}</ng-template></td>
+            <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
+            <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
+            <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
+            <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
+          </tr>                               
+        </tbody>
+      </table>
+      <div *ngIf="table_wireless_device" class="row d-flex justify-content-end">
+        <div class = "col-md-2">
+          <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>       
+        </div>
+      </div> 
+    </div>
+  </div> 
 <br>
 <br>
 <div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;position: fixed;
