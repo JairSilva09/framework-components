@@ -36,6 +36,8 @@ export class CrudeComponentComponent implements OnInit {
 
   itemsOptionsFilter: any = [];
 
+  numRows: number = 10
+
   total_pages: any;
   current_page: any;
   page: number = 1;
@@ -665,6 +667,11 @@ export class CrudeComponentComponent implements OnInit {
         this.COLUMNS = this.COLUMNS_WIRELESS_DEVICE;
       }
     )
+  }
+
+  chooseNumRows(rows: number){
+    this.numRows = rows;
+    
   }
 
   reset(){
