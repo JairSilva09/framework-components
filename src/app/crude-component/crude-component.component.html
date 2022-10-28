@@ -7,9 +7,9 @@
   <div class="row my-3">
     <div class="col-md-12">
       <nav class="nav">
-        <a (click)="get_wireless_device('1')" class="nav-link active" aria-current="page" style="cursor: pointer">Wireless device</a>
-        <a (click)="get_phone_manufacturers()" class="nav-link" style="cursor: pointer">Phone manufacturers</a>
-        <a (click)="get_device_type()" class="nav-link" style="cursor: pointer">Device Type</a>
+        <a (click)="get_wireless_device('1')" class="nav-link active" aria-current="page" style="cursor: pointer" [ngClass]="{'tab_active': table_wireless_device}">Wireless device</a>
+        <a (click)="get_phone_manufacturers()" class="nav-link" style="cursor: pointer" [ngClass]="{'tab_active': table_phone_manufacturers}">Phone manufacturers</a>
+        <a (click)="get_device_type()" class="nav-link" style="cursor: pointer" [ngClass]="{'tab_active': table_devide_type}">Device Type</a>
         
       </nav>
       <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
