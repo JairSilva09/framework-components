@@ -22,8 +22,8 @@
       <button *ngIf="table_devide_type" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> 
     </div>
     <div *ngIf="table_wireless_device" class="d-flex justify-content-between row my-3">
-      <div  class="col-md-3">        
-        <div class="input-group mb-3">
+      <div  class="col-md-3" style="display: flex;gap: 10px;">        
+        <div class="input-group mb-3" style="width: 820px;" >
           <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{currentFilter}}</button>
           <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedFilter('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
@@ -34,10 +34,10 @@
             <option *ngFor="let option of itemsOptionsFilter" value="1">{{option.name}}</option>            
           </select>
         </div>              
-        <!-- <div class="input-group mb-3">
-          <span class="input-group-text" id="inputGroup-sizing-default">Filter</span>
+        <div class="input-group mb-3" style="width: 820px;" >
+          <span class="input-group-text" id="inputGroup-sizing-default">KeyWord</span>
           <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
-        </div> -->
+        </div>
 
       </div>
 
