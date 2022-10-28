@@ -19,7 +19,7 @@ export class CrudeComponentComponent implements OnInit {
   TR: any=[];
   COLUMNS: any[]=[];
   COLUMNS_WIRELESS_DEVICE: any[]=[
-    "id","manufacturer_name","device_name","device_type_name","description","insert_date","active"
+    "id","manufacturer_id","device_name","device_type","description","insert_date","active"
   ]
   
   COLUMNS_DEVICE_TYPE: any[]=[
@@ -68,7 +68,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   TH_DEVICE_TYPE: any[]=[
-    "ID","Name","Insert Date"
+    "ID","Name","Insert Date","",""
   ];
 
   TH_WIRELESS_DEVICE: any[]=[
@@ -236,8 +236,8 @@ export class CrudeComponentComponent implements OnInit {
 
           //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
          
-          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
      
@@ -255,6 +255,8 @@ export class CrudeComponentComponent implements OnInit {
 
     this.storeService.getDevice_type().subscribe(
       (data: any) => {      
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
         this.TR = data.data;
         this.COLUMNS = this.COLUMNS_DEVICE_TYPE;
       }
@@ -263,6 +265,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_phone_manufacturers(){
+    console.log('manufacturer')
 
     this.table_devide_type = false;
     this.table_phone_manufacturers = true;
@@ -271,6 +274,8 @@ export class CrudeComponentComponent implements OnInit {
 
     this.storeService.getphone_manufacturer().subscribe(
       (data: any) => {
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
 
         let items = data.data;
         items.forEach((item: any)=>{
