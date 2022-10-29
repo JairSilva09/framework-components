@@ -14,7 +14,7 @@ const httpOptions = {
 export class StoreService {
   private _isgoe_device_type = 'isgoe/device_type';
   private _isgoe_phone_manufacturer = 'isgoe/phone_manufacturer';
-  private _isgoe_wireless_device = 'isgoe/wireless_device?page=';
+  private _isgoe_wireless_device = 'isgoe/wireless_device';
 
   constructor(private http: HttpClient) { }
 

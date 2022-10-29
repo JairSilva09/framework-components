@@ -10,6 +10,7 @@ export class CrudeComponentComponent implements OnInit {
 
   @ViewChild('manufacturer') manufacturer!: ElementRef;
   @ViewChild('deviceType') deviceType!: ElementRef;
+  @ViewChild('itemcheckbox') itemcheckbox!: ElementRef;
 
   table_devide_type: boolean = false;
   table_wireless_device: boolean = true;
@@ -38,9 +39,13 @@ export class CrudeComponentComponent implements OnInit {
 
   numRows: number = 10
 
+  numItemsActive: number = 0;
+
   total_pages: any;
   current_page: any;
   page: number = 1;
+
+  AllCheckbox: boolean = false;
 
   phoneManufacturersForm: any = {
     id: '',
@@ -240,7 +245,14 @@ export class CrudeComponentComponent implements OnInit {
           item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
-     
+        this.numItemsActive = items.filter((a:any) => a.active == "1").length;
+        if(this.numItemsActive == 10){
+          this.AllCheckbox = true;
+        }else{
+          this.AllCheckbox = false;
+        }
+
+        this.TR = items;     
         this.COLUMNS = this.COLUMNS_WIRELESS_DEVICE;
       }
     )
@@ -608,8 +620,8 @@ export class CrudeComponentComponent implements OnInit {
         
   }
 
-  nextPage(page: any){
-    console.log(page) 
+  nextPage(page: any){    
+ 
     this.storeService.getwireless_device(page).subscribe(
       (data: any) => {
         
@@ -617,7 +629,7 @@ export class CrudeComponentComponent implements OnInit {
         this.current_page = data.meta.current_page;
         
         let items = data.data;
-        console.log(data)
+   
         items.forEach((item: any)=>{
           
           //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
@@ -627,9 +639,15 @@ export class CrudeComponentComponent implements OnInit {
           item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
           item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
+
+        this.numItemsActive = items.filter((a:any) => a.active == "1").length;
+        if(this.numItemsActive == 10){
+          this.AllCheckbox = true;
+        }else{
+          this.AllCheckbox = false;
+        }        
         this.TR = items;
-     
-        this.COLUMNS = this.COLUMNS_WIRELESS_DEVICE;
+        
       }
     )
   }
@@ -659,6 +677,91 @@ export class CrudeComponentComponent implements OnInit {
     } else {
       return false      
     }
+  }
+
+  checkValue(id: any,active: string){
+    let newactive;
+    console.log(this.itemcheckbox.nativeElement.checked)
+    if(active == "1"){
+      newactive = "0"
+      this.numItemsActive++;
+    }else{
+      newactive = "1"
+      this.numItemsActive--;
+    }
+
+    let newWirelessDevice = {    
+      "active":newactive,
+      "id": id        
+    }  
+ 
+    this.storeService.putwireless_device(newWirelessDevice).subscribe({
+      next: (data: any) => {
+        this.storeService.getwireless_device(this.current_page.toString()).subscribe(
+          (data: any) => { 
+            let items = data.data;
+            items.forEach((item: any)=>{              
+              item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+              item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+            })
+            this.numItemsActive = items.filter((a:any) => a.active == "1").length;    
+            this.TR = items;
+            if(this.numItemsActive == 10){
+              this.AllCheckbox = true
+            }else{
+              this.AllCheckbox = false              
+            }
+          }
+        )                       
+      },
+      error: (e) => {
+        console.log('There was an error sending the query', e.error.error);
+      },
+      complete: () => {
+      },
+    })
+
+  }
+
+  checkValueAll(){
+    console.log(this.AllCheckbox)
+    let newStateCheckbox: any;
+    this.AllCheckbox = !this.AllCheckbox;
+
+    if(this.AllCheckbox == true){
+      newStateCheckbox = "1"
+    }else{
+      newStateCheckbox = "0"
+    }
+  
+    this.TR.forEach((item: any)=>{
+      let newWirelessDevice = {    
+        "active":newStateCheckbox,
+        "id": item.id        
+      } 
+      this.storeService.putwireless_device(newWirelessDevice).subscribe({
+        next: (data: any) => {
+          this.storeService.getwireless_device(this.page.toString()).subscribe(
+            (data: any) => { 
+              let items = data.data;
+              items.forEach((item: any)=>{              
+                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+              })
+      
+              this.TR = items;
+                   
+            }
+          )                       
+        },
+        error: (e) => {
+          console.log('There was an error sending the query', e.error.error);
+        },
+        complete: () => {
+        },
+      })
+      
+    })
   }
   
   goToUrl(){
