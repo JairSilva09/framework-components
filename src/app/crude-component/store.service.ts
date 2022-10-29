@@ -62,7 +62,8 @@ export class StoreService {
 
   putphone_manufacturer(deviceId: any) {
     let name = {
-      "name": deviceId.name
+      "name": deviceId.name,
+      "active": deviceId.active,
     }
     return this.http.put(environment.webBaseUrl + this._isgoe_phone_manufacturer + '/' + deviceId.id, name, httpOptions);
   }
@@ -72,10 +73,24 @@ export class StoreService {
   }
 
   // wireless_device
-  getwireless_device(page: string) {
+  getwireless_device(setting: any) {
+    console.log(setting)
+    //let isgoe_wireless_device = 'isgoe/wireless_device?page=';
     let isgoe_wireless_device = 'isgoe/wireless_device?page=';
-    return this.http.get(environment.webBaseUrl + isgoe_wireless_device+page, httpOptions);   
+    
+    let url = setting.page+'&per_page='+setting.per_page+'&manufacturer='+setting.manufacturer+'&search_key='+setting.search_key+'&device_type='+setting.device_type;
+    return this.http.get(environment.webBaseUrl + isgoe_wireless_device+url, httpOptions);
+    //return this.http.get(environment.webBaseUrl + isgoe_wireless_device+setting.page+'&per_page='+setting.per_page, httpOptions);   
     //return this.http.get(environment.webBaseUrl + this._isgoe_wireless_device, httpOptions);
+  }
+
+  getWirelessSearch(search: any){
+    console.log(search)
+    let isgoe_wireless_device = 'isgoe/wireless_device?page=';
+    
+    let url = '&per_page='+search.per_page+'&manufacturer='+search.manufacturer+'&search_key='+search.search_key+'&device_type='+search.device_type;
+    return this.http.get(environment.webBaseUrl + isgoe_wireless_device+url, httpOptions);
+
   }
 
   postwireless_device(device: any) {
@@ -87,10 +102,12 @@ export class StoreService {
   }
 
   putwireless_device(deviceId: any) {
+ 
     let name = {
       "device_name": deviceId.device_name,
       "manufacturer_id": deviceId.manufacturer_id,
       "device_type": deviceId.device_type,
+      "description" : deviceId.description,
       "active": deviceId.active
     }
     return this.http.put(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId.id,name, httpOptions);

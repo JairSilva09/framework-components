@@ -1,4 +1,6 @@
 import { Component, OnInit,ViewChild,ElementRef,AfterViewInit  } from '@angular/core';
+import { fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, tap} from 'rxjs/operators';
 import { StoreService } from './store.service';
 
 @Component({
@@ -11,6 +13,8 @@ export class CrudeComponentComponent implements OnInit {
   @ViewChild('manufacturer') manufacturer!: ElementRef;
   @ViewChild('deviceType') deviceType!: ElementRef;
   @ViewChild('itemcheckbox') itemcheckbox!: ElementRef;
+  @ViewChild('searchBar') searchBar!: ElementRef;
+  //@ViewChild('searchFilter') searchFilter!: ElementRef;
 
   table_devide_type: boolean = false;
   table_wireless_device: boolean = true;
@@ -37,7 +41,7 @@ export class CrudeComponentComponent implements OnInit {
 
   itemsOptionsFilter: any = [];
 
-  numRows: number = 10
+  numRows: string = '10';
 
   numItemsActive: number = 0;
 
@@ -46,6 +50,16 @@ export class CrudeComponentComponent implements OnInit {
   page: number = 1;
 
   AllCheckbox: boolean = false;
+
+  searchFilter: any="Open this select menu";
+  searchKeyword: any;
+  search: any = {
+    manufacturer: '',
+    search_key: '',
+    device_type: '',
+    per_page: '',
+    page: '', 
+  }
 
   phoneManufacturersForm: any = {
     id: '',
@@ -186,9 +200,63 @@ export class CrudeComponentComponent implements OnInit {
       (data: any) => {      
         this.phone_manufacturers_data = data.data;        
       }
-    )         
-    
+    )
+
     this.get_wireless_device(this.page.toString());
+  }
+
+  ngAfterViewInit() {
+ 
+    fromEvent(this.searchBar.nativeElement, 'keyup')
+      .pipe(
+        filter(Boolean),
+        debounceTime(800),
+        distinctUntilChanged(),
+        tap((text: any) => {
+  
+          this.search.search_key = this.searchBar.nativeElement.value,
+          this.search.per_page = this.numRows;                  
+      
+          this.getWirelessBySearch(this.search)
+
+        })
+      )
+      .subscribe();
+  }
+
+  getWirelessBySearch(keyword: any){
+    this.storeService.getWirelessSearch(keyword).subscribe(
+      (data: any) => {
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
+        
+        let items = data.data
+        items.forEach((item: any)=>{
+          // if(item.active == "0"){
+          //   item.active = "No"
+          // }
+
+          // if(item.active == "1"){
+          //   item.active = 'Yes'
+          // }
+          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+
+          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
+         
+          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+        })
+        this.TR = items;
+        this.numItemsActive = items.filter((a:any) => a.active == "1").length;
+        if(this.numItemsActive == 10){
+          this.AllCheckbox = true;
+        }else{
+          this.AllCheckbox = false;
+        }
+        this.TR = items;         
+        console.log(data)
+      }
+    )
   }
 
   getTypeDeviceName(id: any){
@@ -216,14 +284,19 @@ export class CrudeComponentComponent implements OnInit {
 
   get_wireless_device(page: string){
 
+    // let setting = {
+    //   per_page: this.numRows,
+    //   page: page
+    // }
+    this.search.per_page = this.numRows;
+    this.search.page = page;
     this.table_devide_type = false;
     this.table_phone_manufacturers = false;
     this.table_wireless_device= true;
     this.TH = this.TH_WIRELESS_DEVICE; 
    
-    this.storeService.getwireless_device(page).subscribe(
-      (data: any) => {
-        
+    this.storeService.getwireless_device(this.search).subscribe(
+      (data: any) => {        
         this.total_pages = data.meta.last_page;
         this.current_page = data.meta.current_page;
         
@@ -259,6 +332,7 @@ export class CrudeComponentComponent implements OnInit {
   }  
 
   get_device_type(){
+    console.log('device type')
 
     this.TH = this.TH_DEVICE_TYPE;
     this.table_devide_type = true;
@@ -333,7 +407,9 @@ export class CrudeComponentComponent implements OnInit {
         
         this.storeService.putwireless_device(newWirelessDevice).subscribe({
           next: (data: any) => {
-            this.storeService.getwireless_device(this.page.toString()).subscribe(
+            this.search.per_page = this.numRows;
+            this.search.page = this.current_page;
+            this.storeService.getwireless_device(this.search).subscribe(
               (data: any) => { 
                 let items = data.data;
                 items.forEach((item: any)=>{
@@ -385,7 +461,7 @@ export class CrudeComponentComponent implements OnInit {
           "id": this.phoneManufacturersForm.id,       
           "name": this.phoneManufacturersForm.name,
         }
-
+        
         this.storeService.putphone_manufacturer(newPhoneManufacturer).subscribe(
           (result: any) => {
             console.log(result)
@@ -488,7 +564,9 @@ export class CrudeComponentComponent implements OnInit {
 
       this.storeService.deletewireless_device(id).subscribe(
         (resp) => {
-          this.storeService.getwireless_device(this.page.toString()).subscribe(
+          this.search.per_page = this.numRows;
+          this.search.page = this.current_page;
+          this.storeService.getwireless_device(this.search).subscribe(
             (data: any) => { 
               let items = data.data;
               items.forEach((item: any)=>{               
@@ -602,6 +680,7 @@ export class CrudeComponentComponent implements OnInit {
 
   selectedFilter(filter: string){
     this.currentFilter = filter;
+    console.log(this.currentFilter)
     if(filter == "manufacturer"){
       this.storeService.getphone_manufacturer().subscribe(
         (data: any) => {
@@ -620,11 +699,18 @@ export class CrudeComponentComponent implements OnInit {
         
   }
 
-  nextPage(page: any){    
+  nextPage(page: any){   
+    
+    // let setting = {
+    //   per_page: this.numRows,
+    //   page: page 
+    // } 
+    this.search.per_page = this.numRows;
+    this.search.page = page;
  
-    this.storeService.getwireless_device(page).subscribe(
+    this.storeService.getwireless_device(this.search).subscribe(
       (data: any) => {
-        
+
         this.total_pages = data.meta.last_page;
         this.current_page = data.meta.current_page;
         
@@ -652,9 +738,10 @@ export class CrudeComponentComponent implements OnInit {
     )
   }
 
-  chooseNumRows(rows: number){
-    this.numRows = rows;
+  chooseNumRows(rows: string){
+    this.numRows = rows; 
     
+    console.log(this.numRows)   
   }
 
   reset(){
@@ -689,37 +776,71 @@ export class CrudeComponentComponent implements OnInit {
       newactive = "1"
       this.numItemsActive--;
     }
+    
+    if(this.table_wireless_device){
 
-    let newWirelessDevice = {    
-      "active":newactive,
-      "id": id        
-    }  
- 
-    this.storeService.putwireless_device(newWirelessDevice).subscribe({
-      next: (data: any) => {
-        this.storeService.getwireless_device(this.current_page.toString()).subscribe(
-          (data: any) => { 
-            let items = data.data;
-            items.forEach((item: any)=>{              
-              item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-              item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
-            })
-            this.numItemsActive = items.filter((a:any) => a.active == "1").length;    
-            this.TR = items;
-            if(this.numItemsActive == 10){
-              this.AllCheckbox = true
-            }else{
-              this.AllCheckbox = false              
+      let newWirelessDevice = {    
+        "active":newactive,
+        "id": id        
+      } 
+      
+      this.storeService.putwireless_device(newWirelessDevice).subscribe({
+        next: (data: any) => {
+          this.search.per_page = this.numRows;
+          this.search.page = this.current_page;
+          this.storeService.getwireless_device(this.search).subscribe(
+            (data: any) => { 
+              let items = data.data;
+              items.forEach((item: any)=>{              
+                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+              })
+              this.numItemsActive = items.filter((a:any) => a.active == "1").length;    
+              this.TR = items;
+              if(this.numItemsActive == 10){
+                this.AllCheckbox = true
+              }else{
+                this.AllCheckbox = false              
+              }
             }
-          }
-        )                       
-      },
-      error: (e) => {
-        console.log('There was an error sending the query', e.error.error);
-      },
-      complete: () => {
-      },
-    })
+          )                       
+        },
+        error: (e) => {
+          console.log('There was an error sending the query', e.error.error);
+        },
+        complete: () => {
+        },
+      })
+    }
+
+    if(this.table_phone_manufacturers){
+
+      let newPhoneManufacturer = { 
+        "name": "inc",   
+        "active":newactive,
+        "id": id        
+      } 
+     
+      this.storeService.putphone_manufacturer(newPhoneManufacturer).subscribe({
+        next: (data: any) => {         
+          this.storeService.getphone_manufacturer().subscribe(
+            (data: any) => {
+                          
+              let items = data.data;
+              this.TR = items;
+        
+            }
+          )                      
+        },
+        error: (e) => {
+          console.log('There was an error sending the query', e.error.error);
+        },
+        complete: () => {
+        },
+      })
+
+    }
+    
 
   }
 
@@ -741,7 +862,9 @@ export class CrudeComponentComponent implements OnInit {
       } 
       this.storeService.putwireless_device(newWirelessDevice).subscribe({
         next: (data: any) => {
-          this.storeService.getwireless_device(this.page.toString()).subscribe(
+          this.search.per_page = this.numRows;
+          this.search.page = this.current_page;
+          this.storeService.getwireless_device(this.search).subscribe(
             (data: any) => { 
               let items = data.data;
               items.forEach((item: any)=>{              
@@ -762,6 +885,19 @@ export class CrudeComponentComponent implements OnInit {
       })
       
     })
+  }
+
+  settingFilter(filter: string){
+    
+    if(this.currentFilter === 'manufacturer'){
+      this.search.manufacturer = filter
+      this.search.device_type = ""
+    }else if (this.currentFilter === 'device type') {
+      this.search.device_type = filter
+      this.search.manufacturer = ""     
+    } else {
+      console.log(filter)      
+    }
   }
   
   goToUrl(){
