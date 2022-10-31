@@ -23,15 +23,15 @@ export class CrudeComponentComponent implements OnInit {
   TR: any=[];
   COLUMNS: any[]=[];
   COLUMNS_WIRELESS_DEVICE: any[]=[
-    "id","manufacturer_name","device_name","device_type_name","description","insert_date","active"
+    "id","manufacturer_name","device_name","device_type_name","description","active"
   ]
   
   COLUMNS_DEVICE_TYPE: any[]=[
-    "id","name","insert_date"
+    "id","name"
   ]
 
   COLUMNS_PHONE_MANUFACTURERS: any[]=[
-    "id","name","insert_date","active"
+    "id","name","active"
   ]
 
   action: any = "Save";
@@ -92,15 +92,15 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   TH_DEVICE_TYPE: any[]=[
-    "ID","Name","Insert Date","",""
+    "ID","Name","",""
   ];
 
   TH_WIRELESS_DEVICE: any[]=[
-    "ID","Manufacturer","Device Name","Device Type","Description","Insert Date","Active"
+    "ID","Manufacturer","Device Name","Device Type","Description","Active"
   ]
   
   TH_PHONE_MANUFACTURERS: any[]=[
-    "ID","Name","Insert Date","Active"
+    "ID","Name","Active"
   ]
 
   phone_manufacturers_data:any = [ ]

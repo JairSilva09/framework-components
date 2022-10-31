@@ -83,12 +83,14 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"><ng-template #normal >{{th}}</ng-template></th>                    
+            <th *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"><label *ngIf="th == 'Active'" class="form-check-label" for="btncheck1">Active/In-Active</label>
+              <ng-template #normal >{{th}}</ng-template>
+            </th>                    
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of TR">                   
-            <td *ngFor="let column of COLUMNS" style="min-width: 100px"><input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox><ng-template #normal>{{item[column]}}</ng-template></td>
+            <td *ngFor="let column of COLUMNS" style="min-width: 120px"><input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox><ng-template #normal>{{item[column]}}</ng-template></td>
             <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
             <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
             <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
