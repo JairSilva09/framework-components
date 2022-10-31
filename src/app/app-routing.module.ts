@@ -4,9 +4,9 @@ import { CrudeComponentComponent } from './crude-component/crude-component.compo
 import { StoreComponent } from './store/store.component';
 
 const routes: Routes = [
-  {path: 'crud',component: CrudeComponentComponent},
+  {path: '**',component: CrudeComponentComponent},
   // {path: 'store',component: StoreComponent},
-  { path: '**', pathMatch: 'full', redirectTo: 'crud' },
+  { path: '**', pathMatch: 'full', redirectTo: '**' },
 ];
 
 @NgModule({

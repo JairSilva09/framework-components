@@ -37,9 +37,11 @@ export class CrudeComponentComponent implements OnInit {
 
   action: any = "Save";
 
-  currentFilter: string =  "Filter"
+  manufacturerFilter: string =  "manufacturer"
+  deviceTypeFilter: string =  "device type"
 
-  itemsOptionsFilter: any = [];
+  itemsOptionsFilterManufacturer: any = [];
+  itemsOptionsFilterDeviceType: any = [];
 
   numRows: string = '10';
 
@@ -51,7 +53,8 @@ export class CrudeComponentComponent implements OnInit {
 
   AllCheckbox: boolean = false;
 
-  searchFilter: any="Open this select menu";
+  searchFilterManufacturer: any="Open this select menu";
+  searchFilterDevice: any="Open this select menu";
   searchKeyword: any;
   search: any = {
     manufacturer: '',
@@ -203,6 +206,9 @@ export class CrudeComponentComponent implements OnInit {
     )
 
     this.get_wireless_device(this.page.toString());
+
+    this.selectedDeviceType('device type')
+    this.selectedManufacturer('manufacturer')
   }
 
   ngAfterViewInit() {
@@ -678,13 +684,13 @@ export class CrudeComponentComponent implements OnInit {
     this.reset();    
   }
 
-  selectedFilter(filter: string){
-    this.currentFilter = filter;
-    console.log(this.currentFilter)
+  selectedDeviceType(filter: string){
+    this.deviceTypeFilter = filter;
+    console.log(this.deviceTypeFilter)
     if(filter == "manufacturer"){
       this.storeService.getphone_manufacturer().subscribe(
         (data: any) => {
-          this.itemsOptionsFilter = data.data;  
+          this.itemsOptionsFilterManufacturer = data.data;  
         }
       )      
     }
@@ -692,7 +698,28 @@ export class CrudeComponentComponent implements OnInit {
     if(filter == "device type"){
       this.storeService.getDevice_type().subscribe(
         (data: any) => {
-          this.itemsOptionsFilter = data.data;  
+          this.itemsOptionsFilterDeviceType = data.data;  
+        }
+      )      
+    }
+        
+  }
+  
+  selectedManufacturer(filter: string){
+    this.manufacturerFilter = filter;
+    console.log(this.manufacturerFilter)
+    if(filter == "manufacturer"){
+      this.storeService.getphone_manufacturer().subscribe(
+        (data: any) => {
+          this.itemsOptionsFilterManufacturer = data.data;  
+        }
+      )      
+    }
+
+    if(filter == "device type"){
+      this.storeService.getDevice_type().subscribe(
+        (data: any) => {
+          this.itemsOptionsFilterDeviceType = data.data;  
         }
       )      
     }
@@ -889,10 +916,10 @@ export class CrudeComponentComponent implements OnInit {
 
   settingFilter(filter: string){
     
-    if(this.currentFilter === 'manufacturer'){
+    if(this.manufacturerFilter === 'manufacturer'){
       this.search.manufacturer = filter
       this.search.device_type = ""
-    }else if (this.currentFilter === 'device type') {
+    }else if (this.manufacturerFilter === 'device type') {
       this.search.device_type = filter
       this.search.manufacturer = ""     
     } else {
