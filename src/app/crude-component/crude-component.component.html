@@ -78,12 +78,16 @@
           {{numRows}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+<<<<<<< HEAD
           <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
           <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
           <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
           <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
           <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
           <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>
+=======
+            <li *ngFor="let item of CHOOSE_NUM_ROWS"><button (click)="chooseNumRows(item)" class="dropdown-item" type="button">{{item}}</button></li>
+>>>>>>> be4443cc4eded691301403dde7c93ab019010929
         </ul>
       </div>
     </div>
@@ -98,30 +102,19 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th style="min-width: 130px;" *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal"
-                class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox">
-              <ng-template #normal>{{th}}</ng-template>
-            </th>
+            <th *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"><label *ngIf="th == 'Active'" class="form-check-label" for="btncheck1">Active/In-Active</label>
+              <ng-template #normal >{{th}}</ng-template>
+            </th>                    
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of TR">
-            <td *ngFor="let column of COLUMNS" style="min-width: 100px">
-              <input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox"
-                aria-label="..." (change)="checkValue(item['id'],item['active'])"
-                [checked]="stateCheckbox(item[column])" #itemcheckbox>
-              <ng-template #normal>{{item[column]}}</ng-template>
-            </td>
-            <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"
-                data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
-            <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button"
-                class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button>
-            </td>
-            <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"
-                data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
-            <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
-                data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>
-          </tr>
+          <tr *ngFor="let item of TR">                   
+            <td *ngFor="let column of COLUMNS" style="min-width: 120px"><input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox><ng-template #normal>{{item[column]}}</ng-template></td>
+            <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
+            <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
+            <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
+            <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
+          </tr>                               
         </tbody>
       </table>
       <div *ngIf="table_wireless_device" class="row d-flex justify-content-end">
