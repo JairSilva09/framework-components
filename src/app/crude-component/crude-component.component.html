@@ -1,6 +1,6 @@
 <div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;">
   <img src="assets/logo.jpg" style="cursor: auto;" (click)="goToUrl()" alt="">
-  <h1>Wireless Device Managment</h1>
+  <h1>Wireless Device Management</h1>
 </div>
 <hr>
 <div class="container-fluid">
@@ -27,8 +27,7 @@
   <div class="d-flex justify-content-between row my-3">
     <div *ngIf="table_wireless_device" class="col-md-6" style="display: flex;gap: 10px;">
       <div class="input-group mb-3" style="width: 820px;">
-        <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown"
-          aria-expanded="true">{{'Manufacturer'}}</button>
+        <span class="input-group-text" id="inputGroup-sizing-default">Manufacturer</span>
         <!-- <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedDeviceType('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
           </ul> -->
@@ -41,9 +40,7 @@
       </div>
 
       <div class="input-group mb-3" style="width: 820px;">
-        <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Device
-          Type'}}</button>
-
+        <span class="input-group-text" id="inputGroup-sizing-default">Device Type</span>
         <select [disabled]="itemsOptionsFilterDeviceType.length < 1" class="form-select"
           aria-label="Default select example" (ngModelChange)="settingFilterDeviceType($event)"
           [(ngModel)]="searchFilterDevice">
@@ -78,16 +75,7 @@
           {{numRows}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-<<<<<<< HEAD
-          <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
-          <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
-          <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
-          <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
-          <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
-          <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>
-=======
             <li *ngFor="let item of CHOOSE_NUM_ROWS"><button (click)="chooseNumRows(item)" class="dropdown-item" type="button">{{item}}</button></li>
->>>>>>> be4443cc4eded691301403dde7c93ab019010929
         </ul>
       </div>
     </div>

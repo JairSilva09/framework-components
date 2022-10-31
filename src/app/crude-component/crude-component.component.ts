@@ -861,11 +861,17 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   settingFilterManufacturer(filter: string) {
+    if(filter == 'Select one'){
+      filter = '';
+    }
     this.search.manufacturer = filter
     this.getWirelessBySearch(this.search)
   }
 
   settingFilterDeviceType(filter: string) {
+    if(filter == 'Select one'){
+      filter = '';
+    }
     this.search.device_type = filter
     this.getWirelessBySearch(this.search)
   }
