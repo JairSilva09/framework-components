@@ -13,8 +13,7 @@ export class CrudeComponentComponent implements OnInit {
   @ViewChild('manufacturer') manufacturer!: ElementRef;
   @ViewChild('deviceType') deviceType!: ElementRef;
   @ViewChild('itemcheckbox') itemcheckbox!: ElementRef;
-  @ViewChild('searchBar') searchBar!: ElementRef;
-  //@ViewChild('searchFilter') searchFilter!: ElementRef;
+  @ViewChild('searchBar') searchBar!: ElementRef; 
 
   table_devide_type: boolean = false;
   table_wireless_device: boolean = true;
@@ -43,6 +42,9 @@ export class CrudeComponentComponent implements OnInit {
   itemsOptionsFilterManufacturer: any = [];
   itemsOptionsFilterDeviceType: any = [];
 
+  CHOOSE_NUM_ROWS: any[] = [
+    "10","20","30","40","50","100"
+  ];
   numRows: string = '10';
 
   numItemsActive: number = 0;
@@ -103,89 +105,7 @@ export class CrudeComponentComponent implements OnInit {
 
   phone_manufacturers_data:any = [ ]
 
-  wireless_device_data = [
-    {
-      "id": "1",
-      "manufacturer_id": "33271",
-      "device_name":"Smiley",
-      "device_type":"2",
-      "description":"Samsung smiley phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "2",
-      "manufacturer_id": "33272",
-      "device_name":"1",
-      "device_type":"2",
-      "description":"Nokia 1 Andoid smartphone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "3",
-      "manufacturer_id": "33279",
-      "device_name":"1",
-      "device_type":"2",
-      "description":"Alcatel 1 smartphone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "4",
-      "manufacturer_id": "33289",
-      "device_name":"1",
-      "device_type":"2",
-      "description":"Realme 1 Android Smarthphone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "5",
-      "manufacturer_id": "33279",
-      "device_name":"1 (2021)",
-      "device_type":"2",
-      "description":"Alcatel 1(2021), Android smart phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "6",
-      "manufacturer_id": "33272",
-      "device_name":"1 Plus",
-      "device_type":"2",
-      "description":"Nokia 1 plus, Android smart phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "7",
-      "manufacturer_id": "33272",
-      "device_name":"1.3",
-      "device_type":"2",
-      "description":"Nokia 1.3, Android smart phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "8",
-      "manufacturer_id": "33272",
-      "device_name":"1.4",
-      "device_type":"2",
-      "description":"Nokia 1.4, Android smart phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    },
-    {
-      "id": "9",
-      "manufacturer_id": "33275",
-      "device_name":"10",
-      "device_type":"2",
-      "description":"HTC 10, Android smart phone",
-      "insert_date":"2022-10-21",
-      "active":1
-    }
-  ]
+  wireless_device_data: any = []
 
   device_type_data:any = []
 
@@ -766,9 +686,36 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   chooseNumRows(rows: string){
-    this.numRows = rows; 
-    
-    console.log(this.numRows)   
+    this.numRows = rows;
+    this.search.per_page = rows;
+    this.storeService.getwireless_device(this.search).subscribe(
+      (data: any) => {
+
+        this.total_pages = data.meta.last_page;
+        this.current_page = data.meta.current_page;
+        
+        let items = data.data;
+   
+        items.forEach((item: any)=>{
+          
+          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+
+          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
+         
+          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+        })
+
+        this.numItemsActive = items.filter((a:any) => a.active == "1").length;
+        if(this.numItemsActive == 10){
+          this.AllCheckbox = true;
+        }else{
+          this.AllCheckbox = false;
+        }        
+        this.TR = items;
+      }
+    ) 
+     
   }
 
   reset(){

@@ -69,12 +69,7 @@
             {{numRows}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
-            <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
-            <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
-            <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
-            <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
-            <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>            
+            <li *ngFor="let item of CHOOSE_NUM_ROWS"><button (click)="chooseNumRows(item)" class="dropdown-item" type="button">{{item}}</button></li>
         </ul>
       </div>
     </div>
