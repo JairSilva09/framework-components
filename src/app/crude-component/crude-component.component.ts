@@ -165,12 +165,12 @@ export class CrudeComponentComponent implements OnInit {
           // if(item.active == "1"){
           //   item.active = 'Yes'
           // }
-          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+          item.device_type_name = (this.device_type_data.filter((a:any) => a.id == item.device_type).length > 0)?this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name:"";
 
-          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
+          item.manufacturer_name = (this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id).length > 0)?this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name:""
          
-          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
         this.numItemsActive = items.filter((a:any) => a.active == "1").length;
@@ -236,12 +236,11 @@ export class CrudeComponentComponent implements OnInit {
           // if(item.active == "1"){
           //   item.active = 'Yes'
           // }
-          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+          item.device_type_name = (this.device_type_data.filter((a:any) => a.id == item.device_type).length > 0)?this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name:"";
 
-          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
-         
-          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.manufacturer_name = (this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id).length > 0)?this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name:""
+          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
         this.numItemsActive = items.filter((a:any) => a.active == "1").length;
