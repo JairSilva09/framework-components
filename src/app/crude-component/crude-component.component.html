@@ -23,27 +23,23 @@
   <div  class="d-flex justify-content-between row my-3">
     <div *ngIf="table_wireless_device" class="col-md-6" style="display: flex;gap: 10px;">        
       <div class="input-group mb-3" style="width: 820px;" >
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{manufacturerFilter}}</button>
-          <ul class="dropdown-menu">
+          <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Manufacturer'}}</button>
+          <!-- <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedDeviceType('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
-            <!-- <li class="ms-2"><button (click)="selectedFilter('device type')" class="dropdown-item" type="button">Device Type</button></li>          -->
-          </ul>
+          </ul> -->
           <select [disabled]="itemsOptionsFilterManufacturer.length < 1" class="form-select" aria-label="Default select example" 
-          (ngModelChange)="settingFilter($event)" [(ngModel)]="searchFilterManufacturer">
-            <option selected>Open this select menu</option>
+          (ngModelChange)="settingFilterManufacturer($event)" [(ngModel)]="searchFilterManufacturer">
+            <option selected>Select one</option>
             <option *ngFor="let option of itemsOptionsFilterManufacturer" value="{{option.id}}">{{option.name}}</option>            
           </select>
       </div>              
 
       <div class="input-group mb-3" style="width: 820px;" >
-          <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="true">{{deviceTypeFilter}}</button>
-          <ul class="dropdown-menu">
-            <li class="ms-2"><button (click)="selectedManufacturer('device type')" class="dropdown-item" type="button">Device Type</button></li>
-            <!-- <li class="ms-2"><button (click)="selectedFilter('device type')" class="dropdown-item" type="button">Device Type</button></li>          -->
-          </ul>
+          <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Device Type'}}</button>
+          
           <select [disabled]="itemsOptionsFilterDeviceType.length < 1" class="form-select" aria-label="Default select example"
-           (ngModelChange)="settingFilter($event)" [(ngModel)]="searchFilterDevice">
-            <option selected>Open this select menu</option>
+           (ngModelChange)="settingFilterDeviceType($event)" [(ngModel)]="searchFilterDevice">
+            <option selected>Select one</option>
             <option *ngFor="let option of itemsOptionsFilterDeviceType" value="{{option.id}}">{{option.name}}</option>            
           </select>
       </div>              
@@ -93,7 +89,10 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of TR">                   
-            <td *ngFor="let column of COLUMNS" style="min-width: 100px"><input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox><ng-template #normal>{{item[column]}}</ng-template></td>
+            <td *ngFor="let column of COLUMNS" style="min-width: 100px">
+              <input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox>
+              <ng-template #normal>{{item[column]}}</ng-template>
+            </td>
             <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
             <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
             <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
