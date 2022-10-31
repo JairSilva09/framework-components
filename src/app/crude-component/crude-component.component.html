@@ -1,82 +1,96 @@
 <div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;">
-  <img src="assets/logo.jpg" style="cursor: auto;" (click)="goToUrl()"  alt=""> <h1>Wireless Data Drop Tool</h1>
+  <img src="assets/logo.jpg" style="cursor: auto;" (click)="goToUrl()" alt="">
+  <h1>Wireless Device Managment</h1>
 </div>
 <hr>
 <div class="container-fluid">
   <div class="row my-3">
     <div class="col-md-12">
       <nav class="nav">
-        <a (click)="get_wireless_device('1')" class="nav-link active" aria-current="page" style="cursor: pointer" [ngClass]="{'tab_active': table_wireless_device}">Wireless device</a>
-        <a (click)="get_phone_manufacturers()" class="nav-link" style="cursor: pointer" [ngClass]="{'tab_active': table_phone_manufacturers}">Phone manufacturers</a>
-        <a (click)="get_device_type()" class="nav-link" style="cursor: pointer" [ngClass]="{'tab_active': table_devide_type}">Device Type</a>
-        
+        <a (click)="get_wireless_device('1')" class="nav-link active" aria-current="page" style="cursor: pointer"
+          [ngClass]="{'tab_active': table_wireless_device}">Wireless Device</a>
+        <a (click)="get_phone_manufacturers()" class="nav-link" style="cursor: pointer"
+          [ngClass]="{'tab_active': table_phone_manufacturers}">Phone Manufacturers</a>
+        <a (click)="get_device_type()" class="nav-link" style="cursor: pointer"
+          [ngClass]="{'tab_active': table_devide_type}">Device Type</a>
+
       </nav>
     </div>
   </div>
 
-      <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
+  <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
       <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
       <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
             
-      -->      
-  
-  <div  class="d-flex justify-content-between row my-3">
-    <div *ngIf="table_wireless_device" class="col-md-6" style="display: flex;gap: 10px;">        
-      <div class="input-group mb-3" style="width: 820px;" >
-          <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Manufacturer'}}</button>
-          <!-- <ul class="dropdown-menu">
+      -->
+
+  <div class="d-flex justify-content-between row my-3">
+    <div *ngIf="table_wireless_device" class="col-md-6" style="display: flex;gap: 10px;">
+      <div class="input-group mb-3" style="width: 820px;">
+        <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown"
+          aria-expanded="true">{{'Manufacturer'}}</button>
+        <!-- <ul class="dropdown-menu">
             <li class="ms-2"><button (click)="selectedDeviceType('manufacturer')" class="dropdown-item" type="button">Manufacturer</button></li>
           </ul> -->
-          <select [disabled]="itemsOptionsFilterManufacturer.length < 1" class="form-select" aria-label="Default select example" 
-          (ngModelChange)="settingFilterManufacturer($event)" [(ngModel)]="searchFilterManufacturer">
-            <option selected>Select one</option>
-            <option *ngFor="let option of itemsOptionsFilterManufacturer" value="{{option.id}}">{{option.name}}</option>            
-          </select>
-      </div>              
+        <select [disabled]="itemsOptionsFilterManufacturer.length < 1" class="form-select"
+          aria-label="Default select example" (ngModelChange)="settingFilterManufacturer($event)"
+          [(ngModel)]="searchFilterManufacturer">
+          <option selected>Select one</option>
+          <option *ngFor="let option of itemsOptionsFilterManufacturer" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
 
-      <div class="input-group mb-3" style="width: 820px;" >
-          <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Device Type'}}</button>
-          
-          <select [disabled]="itemsOptionsFilterDeviceType.length < 1" class="form-select" aria-label="Default select example"
-           (ngModelChange)="settingFilterDeviceType($event)" [(ngModel)]="searchFilterDevice">
-            <option selected>Select one</option>
-            <option *ngFor="let option of itemsOptionsFilterDeviceType" value="{{option.id}}">{{option.name}}</option>            
-          </select>
-      </div>              
-      <div class="input-group mb-3" style="width: 820px;" >
-          <span class="input-group-text" id="inputGroup-sizing-default">KeyWord</span>
-          <input type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" #searchBar>
+      <div class="input-group mb-3" style="width: 820px;">
+        <button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="true">{{'Device
+          Type'}}</button>
+
+        <select [disabled]="itemsOptionsFilterDeviceType.length < 1" class="form-select"
+          aria-label="Default select example" (ngModelChange)="settingFilterDeviceType($event)"
+          [(ngModel)]="searchFilterDevice">
+          <option selected>Select one</option>
+          <option *ngFor="let option of itemsOptionsFilterDeviceType" value="{{option.id}}">{{option.name}}</option>
+        </select>
+      </div>
+      <div class="input-group mb-3" style="width: 820px;">
+        <span class="input-group-text" id="inputGroup-sizing-default">KeyWord</span>
+        <input type="text" class="form-control" aria-label="Sizing example input"
+          aria-describedby="inputGroup-sizing-default" #searchBar>
       </div>
     </div>
     <div *ngIf="table_wireless_device" class="col-md-6">
-      <button  (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
+      <button (click)="addWirelessDevice()" type="button" class="btn btn-success btn-sm mx-2 float-end"
+        data-bs-toggle="modal" data-bs-target="#wirelessDevice">+</button>
     </div>
-    <div *ngIf="table_phone_manufacturers" class="col-md-12">      
-      <button type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">+</button>
+    <div *ngIf="table_phone_manufacturers" class="col-md-12">
+      <button type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal"
+        data-bs-target="#phoneManufacturers">+</button>
     </div>
-    <div *ngIf="table_devide_type" class="col-md-12">      
-      <button type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal" data-bs-target="#devideType">+</button> 
+    <div *ngIf="table_devide_type" class="col-md-12">
+      <button type="button" class="btn btn-success btn-sm mx-2 float-end" data-bs-toggle="modal"
+        data-bs-target="#devideType">+</button>
     </div>
   </div>
   <div *ngIf="table_wireless_device" class="row d-flex justify-content-center">
     <div class="col-md-2">
       <div class="dropdown">
-        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
-            {{numRows}}
+        <button class="btn btn-light dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+          aria-expanded="false">
+          {{numRows}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
-            <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
-            <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
-            <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
-            <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
-            <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>            
+          <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
+          <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
+          <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
+          <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
+          <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
+          <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>
         </ul>
       </div>
     </div>
-          
+
     <div class="col-md-3">
-      <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>         
+      <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)">
+      </app-pagination>
     </div>
   </div>
   <div class="row">
@@ -84,41 +98,52 @@
       <table class="table table-hover">
         <thead>
           <tr>
-            <th *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"><ng-template #normal >{{th}}</ng-template></th>                    
+            <th style="min-width: 130px;" *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal"
+                class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox">
+              <ng-template #normal>{{th}}</ng-template>
+            </th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let item of TR">                   
+          <tr *ngFor="let item of TR">
             <td *ngFor="let column of COLUMNS" style="min-width: 100px">
-              <input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..." (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])" #itemcheckbox>
+              <input *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox"
+                aria-label="..." (change)="checkValue(item['id'],item['active'])"
+                [checked]="stateCheckbox(item[column])" #itemcheckbox>
               <ng-template #normal>{{item[column]}}</ng-template>
             </td>
-            <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
-            <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button></td>
-            <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
-            <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip" data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>                   
-          </tr>                               
+            <td><button *ngIf="table_wireless_device" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"
+                data-bs-toggle="modal" data-bs-target="#wirelessDevice">Edit</button></td>
+            <td><button *ngIf="table_phone_manufacturers" (click)="edit(item.id)" type="button"
+                class="btn btn-info btn-sm" data-bs-toggle="modal" data-bs-target="#phoneManufacturers">Edit</button>
+            </td>
+            <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"
+                data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
+            <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+                data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>
+          </tr>
         </tbody>
       </table>
       <div *ngIf="table_wireless_device" class="row d-flex justify-content-end">
-        <div class = "col-md-2">
-          <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)"></app-pagination>       
+        <div class="col-md-2">
+          <app-pagination [total_pages]="total_pages" [current_page]="current_page" (newPage)="nextPage($event)">
+          </app-pagination>
         </div>
-      </div> 
+      </div>
     </div>
-  </div> 
-<br>
-<br>
-<div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;position: fixed;
-bottom: 0px;background-color: #e9ecef;">
-  <div class="col-md-12" >
-    <h4 class="text-center" style="font-size: 30px;">Infinity Sales Group</h4>
   </div>
-</div>
+  <br>
+  <br>
+  <div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;position: fixed;
+bottom: 0px;background-color: #e9ecef;">
+    <div class="col-md-12">
+      <h4 class="text-center" style="font-size: 30px;">Infinity Sales Group</h4>
+    </div>
+  </div>
 
 
-<!-- Modal wireless-->
-<div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <!-- Modal wireless-->
+  <div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -126,32 +151,36 @@ bottom: 0px;background-color: #e9ecef;">
           <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
-                <div class="input-group mb-3">                    
-                    <select class="form-select" [(ngModel)]="wirelessDevicesForm.manufacturer_id" id="inputGroupSelect01" #manufacturer>
-                      <option>{{wirelessDevicesForm.manufacturer_name}}</option>                                           
-                      <option *ngFor="let item of phone_manufacturers_data" [value]="item.id" >{{item.name}}</option>                      
-                    </select>
-                </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Phone manufacturers</label>
+            <div class="input-group mb-3">
+              <select class="form-select" [(ngModel)]="wirelessDevicesForm.manufacturer_id" id="inputGroupSelect01"
+                #manufacturer>
+                <option>{{wirelessDevicesForm.manufacturer_name}}</option>
+                <option *ngFor="let item of phone_manufacturers_data" [value]="item.id">{{item.name}}</option>
+              </select>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Device name</label>
-                <input type="email" [(ngModel)]="wirelessDevicesForm.device_name" class="form-control" id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device name</label>
+            <input type="email" [(ngModel)]="wirelessDevicesForm.device_name" class="form-control"
+              id="exampleFormControlInput1" placeholder="">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Device type</label>
+            <div class="input-group mb-3">
+              <select class="form-select" [(ngModel)]="wirelessDevicesForm.device_type" id="inputGroupSelect01"
+                #deviceType>
+                <option>{{wirelessDevicesForm.device_type_name}}</option>
+                <option *ngFor="let item of device_type_data" [value]="item.id">{{item.name}}</option>
+              </select>
             </div>
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Device type</label>
-                <div class="input-group mb-3">                    
-                    <select class="form-select" [(ngModel)]="wirelessDevicesForm.device_type" id="inputGroupSelect01" #deviceType>
-                      <option>{{wirelessDevicesForm.device_type_name}}</option>                                            
-                      <option *ngFor="let item of device_type_data" [value]="item.id" >{{item.name}}</option>                      
-                    </select>
-                </div>
-            </div>
-            <div class="mb-3">
-                <label for="exampleFormControlTextarea1" class="form-label">Description</label>
-                <textarea class="form-control" [(ngModel)]="wirelessDevicesForm.description" id="exampleFormControlTextarea1" rows="3"></textarea>
-            </div>                             
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Description</label>
+            <textarea class="form-control" [(ngModel)]="wirelessDevicesForm.description"
+              id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
         </div>
         <div class="modal-footer">
           <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -159,9 +188,9 @@ bottom: 0px;background-color: #e9ecef;">
         </div>
       </div>
     </div>
-</div>
-<!-- Modal phone manufacturers-->
-<div class="modal fade" id="phoneManufacturers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  </div>
+  <!-- Modal phone manufacturers-->
+  <div class="modal fade" id="phoneManufacturers" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -169,10 +198,10 @@ bottom: 0px;background-color: #e9ecef;">
           <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="input-group">
-                <span class="input-group-text">Name</span>
-                <input type="text" [(ngModel)]="phoneManufacturersForm.name" aria-label="Last name" class="form-control">
-            </div>          
+          <div class="input-group">
+            <span class="input-group-text">Name</span>
+            <input type="text" [(ngModel)]="phoneManufacturersForm.name" aria-label="Last name" class="form-control">
+          </div>
         </div>
         <div class="modal-footer">
           <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -180,9 +209,9 @@ bottom: 0px;background-color: #e9ecef;">
         </div>
       </div>
     </div>
-</div>
-<!-- Modal device types-->
-<div class="modal fade" id="devideType" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  </div>
+  <!-- Modal device types-->
+  <div class="modal fade" id="devideType" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -190,10 +219,11 @@ bottom: 0px;background-color: #e9ecef;">
           <button type="button" (click)="close()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-            <div class="mb-3">
-                <label for="exampleFormControlInput1" class="form-label">Name</label>
-                <input type="email" [(ngModel)]="deviceTypeForm.name" class="form-control" id="exampleFormControlInput1" placeholder="">
-            </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Name</label>
+            <input type="email" [(ngModel)]="deviceTypeForm.name" class="form-control" id="exampleFormControlInput1"
+              placeholder="">
+          </div>
         </div>
         <div class="modal-footer">
           <button (click)="close()" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,7 +231,4 @@ bottom: 0px;background-color: #e9ecef;">
         </div>
       </div>
     </div>
-</div>
-
-
-
+  </div>
