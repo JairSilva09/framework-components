@@ -78,16 +78,7 @@
           {{numRows}}
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-<<<<<<< HEAD
-          <li><button (click)="chooseNumRows('10')" class="dropdown-item" type="button">10</button></li>
-          <li><button (click)="chooseNumRows('20')" class="dropdown-item" type="button">20</button></li>
-          <li><button (click)="chooseNumRows('30')" class="dropdown-item" type="button">30</button></li>
-          <li><button (click)="chooseNumRows('40')" class="dropdown-item" type="button">40</button></li>
-          <li><button (click)="chooseNumRows('50')" class="dropdown-item" type="button">50</button></li>
-          <li><button (click)="chooseNumRows('100')" class="dropdown-item" type="button">100</button></li>
-=======
             <li *ngFor="let item of CHOOSE_NUM_ROWS"><button (click)="chooseNumRows(item)" class="dropdown-item" type="button">{{item}}</button></li>
->>>>>>> be4443cc4eded691301403dde7c93ab019010929
         </ul>
       </div>
     </div>
@@ -98,11 +89,34 @@
     </div>
   </div>
   <div class="row">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="check-circle-fill" viewBox="0 0 16 16">
+        <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+      </symbol>
+    </svg>
     <div class="col-md-12">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th *ngFor="let th of TH" scope="col"><input (change)="checkValueAll()" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"><label *ngIf="th == 'Active'" class="form-check-label" for="btncheck1">Active/In-Active</label>
+            <th *ngFor="let th of TH" scope="col">
+              <div *ngIf="alertCheckbox && th == 'Active'" class="row">
+                <div class="col-md-12">  
+                  <div class="alert alert-danger alert-dismissible fade show" role="alert" style="text-align: justify; font-size: 13px"  >
+                    sure you want to enable/disable these records? <span (click)="checkValueAll()" style="font-size: 14px; cursor: pointer"><b>Yes</b></span>  
+                    <button type="button" class="btn-close" (click)="alertCheckbox = false" aria-label="Close">                     
+                    </button>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="th == 'Active';else normal" class="d-flex justify-content-evenly" style="cursor: pointer" >
+                <div (click)="alertCheckbox = true" class="border" style="width: 15px; height: 15px;margin-right:2px" [ngStyle]="{'background-color':AllCheckbox? '#198754' : 'white' }"></div>
+                <label *ngIf="th == 'Active'" class="form-check-label" for="btncheck1">Active/In-Active</label>
+              </div>
+              
+              <!-- <div *ngIf="th == 'Active';else normal" class="inline-block">
+                <svg  class="bi flex-shrink-0 me-2" role="img" aria-label="Success:" style="width: 100%; max-height: 12px"><use xlink:href="#check-circle-fill"/></svg>              
+              </div> -->
+              <!-- <input (change)="alertCheckbox = true" *ngIf="th == 'Active';else normal" class="form-check-input me-1" type="checkbox" value="" aria-label="..." [checked]="AllCheckbox"> -->
               <ng-template #normal >{{th}}</ng-template>
             </th>                    
           </tr>

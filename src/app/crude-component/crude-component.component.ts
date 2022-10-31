@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
 import { fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, filter, tap } from 'rxjs/operators';
+import { debounceTime, delay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { StoreService } from './store.service';
 
 @Component({
@@ -53,12 +53,14 @@ export class CrudeComponentComponent implements OnInit {
   current_page: any;
   page: number = 1;
 
+  alertCheckbox: boolean = false;
   AllCheckbox: boolean = false;
 
   searchFilterManufacturer: any = "Select one";
   searchFilterDevice: any = "Select one";
   searchKeyword: any;
   search: any = {
+    device_name: '',    
     manufacturer: '',
     search_key: '',
     device_type: '',
@@ -814,11 +816,10 @@ export class CrudeComponentComponent implements OnInit {
 
     }
 
-
   }
 
   checkValueAll() {
-    console.log(this.AllCheckbox)
+    this.alertCheckbox = false;
     let newStateCheckbox: any;
     this.AllCheckbox = !this.AllCheckbox;
 
@@ -833,7 +834,19 @@ export class CrudeComponentComponent implements OnInit {
         "active": newStateCheckbox,
         "id": item.id
       }
-      this.storeService.putwireless_device(newWirelessDevice).subscribe({
+
+      // this.sp.myservice(data).pipe(
+      //   tap(() => this.isUpdate = true),
+      //   delay(5000),
+      // ).subscribe(() => this.isUpdate = false);
+      
+      this.storeService.putwireless_device(newWirelessDevice).pipe(
+       
+        tap((text: any) => {        
+
+        }),
+        delay(1000)      
+      ).subscribe({
         next: (data: any) => {
           this.search.per_page = this.numRows;
           this.search.page = this.current_page;
@@ -845,8 +858,7 @@ export class CrudeComponentComponent implements OnInit {
                 item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
               })
 
-              this.TR = items;
-
+              this.TR = items;              
             }
           )
         },
