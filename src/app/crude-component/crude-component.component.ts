@@ -53,7 +53,7 @@ export class CrudeComponentComponent implements OnInit {
   current_page: any;
   page: number = 1;
 
-  alertCheckbox: boolean = false;
+  //alertCheckbox: boolean = false;
   AllCheckbox: boolean = false;
 
   searchFilterManufacturer: any = "Select one";
@@ -818,8 +818,18 @@ export class CrudeComponentComponent implements OnInit {
 
   }
 
+  alertCheckbox(){
+    let text = "Sure you want to enable/disable these records?.";
+    if (confirm(text) == true) {
+     
+      this.checkValueAll();
+    } else {
+      text = "Canceled!";
+    }
+  }
+
   checkValueAll() {
-    this.alertCheckbox = false;
+  
     let newStateCheckbox: any;
     this.AllCheckbox = !this.AllCheckbox;
 
