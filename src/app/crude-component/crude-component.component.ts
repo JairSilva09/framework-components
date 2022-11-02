@@ -117,18 +117,7 @@ export class CrudeComponentComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.storeService.getDevice_type().subscribe(
-      (data: any) => {
-        this.device_type_data = data.data;
-      }
-    )
-
-    this.storeService.getphone_manufacturer().subscribe(
-      (data: any) => {
-        this.phone_manufacturers_data = data.data;
-      }
-    )
-
+   
     this.get_wireless_device(this.page.toString());
 
     this.selectedDeviceType('device type')
@@ -167,6 +156,7 @@ export class CrudeComponentComponent implements OnInit {
 
             this.search.search_key = this.searchBar.nativeElement.value,
               this.search.per_page = this.numRows;
+              console.log(this.search.search_key)
 
             this.getWirelessBySearch(this.search)
 
@@ -191,12 +181,9 @@ export class CrudeComponentComponent implements OnInit {
           // if(item.active == "1"){
           //   item.active = 'Yes'
           // }
-          item.device_type_name = (this.device_type_data.filter((a: any) => a.id == item.device_type).length > 0) ? this.device_type_data.filter((a: any) => a.id == item.device_type)[0].name : "";
-
-          item.manufacturer_name = (this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id).length > 0) ? this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id)[0].name : ""
-
-          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+         
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -209,29 +196,6 @@ export class CrudeComponentComponent implements OnInit {
         console.log(data)
       }
     )
-  }
-
-  getTypeDeviceName(id: any) {
-
-    let name = "";
-
-    this.device_type_data.forEach((item: any) => {
-      if (item.id == id) {
-        name = item.name
-      }
-    })
-
-    return name
-  }
-
-  getNameManufacturer(id: any) {
-    let name = "";
-    this.phone_manufacturers_data.forEach((item: any) => {
-      if (item.id == id) {
-        name = item.name
-      }
-    })
-    return name
   }
 
   get_wireless_device(page: string) {
@@ -253,8 +217,8 @@ export class CrudeComponentComponent implements OnInit {
         this.current_page = data.meta.current_page;
 
         let items = data.data;
-        console.log(data)
-        items.forEach((item: any) => {
+        console.log(data.data)
+        items.forEach((item: any) => {        
           // if(item.active == "0"){
           //   item.active = "No"
           // }
@@ -262,11 +226,9 @@ export class CrudeComponentComponent implements OnInit {
           // if(item.active == "1"){
           //   item.active = 'Yes'
           // }
-          item.device_type_name = (this.device_type_data.filter((a: any) => a.id == item.device_type).length > 0) ? this.device_type_data.filter((a: any) => a.id == item.device_type)[0].name : "";
+          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
 
-          item.manufacturer_name = (this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id).length > 0) ? this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id)[0].name : ""
-          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -283,7 +245,6 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_device_type() {
-    console.log('device type')
 
     this.TH = this.TH_DEVICE_TYPE;
     this.table_devide_type = true;
@@ -302,7 +263,6 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_phone_manufacturers() {
-    console.log('manufacturer')
 
     this.table_devide_type = false;
     this.table_phone_manufacturers = true;
@@ -344,6 +304,7 @@ export class CrudeComponentComponent implements OnInit {
     if (this.action == "Update") {
 
       if (this.table_wireless_device) {
+       
         this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
         this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
 
@@ -363,22 +324,23 @@ export class CrudeComponentComponent implements OnInit {
             this.storeService.getwireless_device(this.search).subscribe(
               (data: any) => {
                 let items = data.data;
-                items.forEach((item: any) => {
-                  if (item.active == "0") {
-                    item.active = "No"
-                  }
+                // items.forEach((item: any) => {
+                //   if (item.active == "0") {
+                //     item.active = "No"
+                //   }
 
-                  if (item.active == "1") {
-                    item.active = "<input class='form-check-input me-1' type='checkbox' value='' aria-label='...'>"
-                  }
-                  item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-                  item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+                //   if (item.active == "1") {
+                //     item.active = "<input class='form-check-input me-1' type='checkbox' value='' aria-label='...'>"
+                //   }
+                  
+                // })
+                items.forEach((item: any) => {
+                  item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+                  item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
                 })
 
                 this.TR = items;
                 console.log(this.TR)
-
-                this.COLUMNS = this.COLUMNS_WIRELESS_DEVICE;
               }
             )
           },
@@ -521,8 +483,8 @@ export class CrudeComponentComponent implements OnInit {
             (data: any) => {
               let items = data.data;
               items.forEach((item: any) => {
-                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+                item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+                item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
               })
               this.TR = items;
             }
@@ -580,12 +542,25 @@ export class CrudeComponentComponent implements OnInit {
 
     if (this.table_wireless_device) {
 
+      this.storeService.getphone_manufacturer().subscribe(
+        (data: any) => {
+          this.phone_manufacturers_data = data.data;
+        }
+      )
+  
+      this.storeService.getDevice_type().subscribe(
+        (data: any) => {
+          this.device_type_data = data.data;
+        }
+      )
+
       this.TR.forEach((item: any) => {
 
         if (item.id == id) {
           console.log(item)
           this.wirelessDevicesForm.id = item.id;
           this.wirelessDevicesForm.device_name = item.device_name;
+          this.wirelessDevicesForm.manufacturer_name = item.manufacturer_name;
           this.wirelessDevicesForm.manufacturer_id = item.manufacturer_id;
           this.wirelessDevicesForm.device_type = item.device_type;
           this.wirelessDevicesForm.description = item.description;
@@ -688,13 +663,8 @@ export class CrudeComponentComponent implements OnInit {
         let items = data.data;
 
         items.forEach((item: any) => {
-
-          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
-
-          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
-
-          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -721,13 +691,8 @@ export class CrudeComponentComponent implements OnInit {
         let items = data.data;
 
         items.forEach((item: any) => {
-
-          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
-
-          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
-
-          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -790,8 +755,8 @@ export class CrudeComponentComponent implements OnInit {
             (data: any) => {
               let items = data.data;
               items.forEach((item: any) => {
-                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+                item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+                item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
               })
               this.numItemsActive = items.filter((a: any) => a.active == "1").length;
               this.TR = items;
@@ -914,8 +879,8 @@ export class CrudeComponentComponent implements OnInit {
           (data: any) => {
             let items = data.data;
             items.forEach((item: any) => {
-              item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-              item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+              item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+              item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
             })
             this.TR = items;
           }

@@ -126,7 +126,7 @@ export class StoreService {
 
 
 
-  putwireless_device(deviceId: any) {
+  putwireless_device(deviceId: any) {   
  
     let name = {
       "device_name": deviceId.device_name,
