@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { defineCustomElements } from '@teamhive/lottie-player/loader';
+defineCustomElements(window);
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type': 'application/json',
@@ -15,6 +17,7 @@ export class StoreService {
   private _isgoe_device_type = 'isgoe/device_type';
   private _isgoe_phone_manufacturer = 'isgoe/phone_manufacturer';
   private _isgoe_wireless_device = 'isgoe/wireless_device';
+  private _isgoe_wireless_device_bulk_update = 'isgoe/wireless_device/bulk_update';
 
   constructor(private http: HttpClient) { }
 
@@ -50,7 +53,8 @@ export class StoreService {
 
   // manufacturer
   getphone_manufacturer() {
-    return this.http.get(environment.webBaseUrl + this._isgoe_phone_manufacturer, httpOptions);
+    // let url = setting.page+'&per_page='+setting.per_page+'&manufacturer='+setting.manufacturer+'&search_key='+setting.search_key+'&device_type='+setting.device_type;
+    return this.http.get(environment.webBaseUrl + this._isgoe_phone_manufacturer + '?per_page=1000', httpOptions);
   }
 
   postphone_manufacturer(device: any) {
@@ -101,7 +105,41 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device, device, httpOptions);
   }
 
+
+  postwireless_devicebulk_update (device: any) {
+
+  //   let device2 =  [
+  //     {
+  //         "id":"69254",
+  //         "active": "1"
+  //     },
+  //     {
+  //         "id":"69254",
+  //         "active": "0"
+  //     }
+  // ]
+    return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device_bulk_update, device, httpOptions);
+  }
+
+
+
+
+
+
+
   putwireless_device(deviceId: any) {
+ 
+    let name = {
+      "device_name": deviceId.device_name,
+      "manufacturer_id": deviceId.manufacturer_id,
+      "device_type": deviceId.device_type,
+      "description" : deviceId.description,
+      "active": deviceId.active
+    }
+    return this.http.put(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId.id,name, httpOptions);
+  }
+
+  sendbulkItemsUpdate(deviceId: any) {
  
     let name = {
       "device_name": deviceId.device_name,
@@ -115,6 +153,11 @@ export class StoreService {
 
   deletewireless_device(deviceId: any) {   
     return this.http.delete(environment.webBaseUrl + this._isgoe_wireless_device + '/' + deviceId, httpOptions);
+  }
+
+  isLoginService() {
+    return this.http.get('https://satprocess.com/broadbandAdmin/index.php/site/islogin', httpOptions);
+    // return this.http.get('https://isg-br-webdev/broadbandAdmin/index.php/site/islogin', httpOptions);
   }
 
 }
