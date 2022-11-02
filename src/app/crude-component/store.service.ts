@@ -159,5 +159,4 @@ export class StoreService {
     return this.http.get('https://satprocess.com/broadbandAdmin/index.php/site/islogin', httpOptions);
     // return this.http.get('https://isg-br-webdev/broadbandAdmin/index.php/site/islogin', httpOptions);
   }
-
 }
