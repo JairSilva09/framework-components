@@ -77,8 +77,7 @@ export class StoreService {
   }
 
   // wireless_device
-  getwireless_device(setting: any) {
-    console.log(setting)
+  getwireless_device(setting: any) { 
     //let isgoe_wireless_device = 'isgoe/wireless_device?page=';
     let isgoe_wireless_device = 'isgoe/wireless_device?page=';
     
