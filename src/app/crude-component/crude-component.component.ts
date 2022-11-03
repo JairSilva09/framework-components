@@ -892,7 +892,7 @@ export class CrudeComponentComponent implements OnInit {
   settingFilterManufacturer(filter: string) {
     if (filter == 'Select one') {
       filter = '';
-    }
+    }   
     this.search.manufacturer = filter
     this.getWirelessBySearch(this.search)
   }
