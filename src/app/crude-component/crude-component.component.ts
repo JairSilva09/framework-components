@@ -146,7 +146,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.userIslogin) {
+    if (true) {
       fromEvent(this.searchBar.nativeElement, 'keyup')
         .pipe(
           filter(Boolean),
@@ -367,8 +367,7 @@ export class CrudeComponentComponent implements OnInit {
         );
       }
 
-      if (this.table_phone_manufacturers) {
-        console.log(this.phoneManufacturersForm)
+      if (this.table_phone_manufacturers) {       
 
         let newPhoneManufacturer = {
           "id": this.phoneManufacturersForm.id,

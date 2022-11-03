@@ -88,7 +88,7 @@ export class StoreService {
   }
 
   getWirelessSearch(search: any){
-    console.log(search)
+
     let isgoe_wireless_device = 'isgoe/wireless_device?page=';
     
     let url = '&per_page='+search.per_page+'&manufacturer='+search.manufacturer+'&search_key='+search.search_key+'&device_type='+search.device_type+'&device_name='+search.device_name;
