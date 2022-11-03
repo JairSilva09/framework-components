@@ -34,13 +34,14 @@ export class StoreService {
   }
 
   postDevice_type(device: any) {
+    debugger
     // let device = {
     //   "name": deviceName
     // }
     return this.http.post(environment.webBaseUrl + this._isgoe_device_type, device, httpOptions);
   }
 
-  putDevice_type(deviceId: any) {
+  putDevice_type(deviceId: any) {  
     let device = {
       "name": deviceId.name
     }
@@ -104,7 +105,6 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device, device, httpOptions);
   }
 
-
   postwireless_devicebulk_update (device: any) {
 
   //   let device2 =  [
@@ -120,7 +120,8 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device_bulk_update, device, httpOptions);
   }
 
-  putwireless_device(deviceId: any) {   
+  putwireless_device(deviceId: any) {  
+    debugger 
  
     let name = {
       "device_name": deviceId.device_name,
