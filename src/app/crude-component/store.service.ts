@@ -120,12 +120,6 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device_bulk_update, device, httpOptions);
   }
 
-
-
-
-
-
-
   putwireless_device(deviceId: any) {   
  
     let name = {

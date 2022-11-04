@@ -146,7 +146,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.userIslogin) {
+    if (true) {
       fromEvent(this.searchBar.nativeElement, 'keyup')
         .pipe(
           filter(Boolean),
@@ -729,10 +729,10 @@ export class CrudeComponentComponent implements OnInit {
     }
   }
 
-  checkValue(id: any, active: string) {
+  checkValue(item: any) {
     let newactive;
     console.log(this.itemcheckbox.nativeElement.checked)
-    if (active == "1") {
+    if (item.active == "1") {
       newactive = "0"
       this.numItemsActive++;
     } else {
@@ -744,7 +744,7 @@ export class CrudeComponentComponent implements OnInit {
 
       let newWirelessDevice = {
         "active": newactive,
-        "id": id
+        "id": item.id
       }
 
       this.storeService.putwireless_device(newWirelessDevice).subscribe({
@@ -778,10 +778,10 @@ export class CrudeComponentComponent implements OnInit {
 
     if (this.table_phone_manufacturers) {
 
-      let newPhoneManufacturer = {
-        "name": "inc",
+      let newPhoneManufacturer = {        
         "active": newactive,
-        "id": id
+        "name": item.name,
+        "id": item.id
       }
 
       this.storeService.putphone_manufacturer(newPhoneManufacturer).subscribe({
