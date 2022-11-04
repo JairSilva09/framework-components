@@ -112,7 +112,7 @@
             <tr *ngFor="let item of TR">
               <td *ngFor="let column of COLUMNS" style="min-width: 145px;"><input
                   *ngIf="column == 'active'; else normal" class="form-check-input me-1" type="checkbox" aria-label="..."
-                  (change)="checkValue(item['id'],item['active'])" [checked]="stateCheckbox(item[column])"
+                  (change)="checkValue(item)" [checked]="stateCheckbox(item[column])"
                   #itemcheckbox>
                 <ng-template #normal>{{item[column]}}</ng-template>
               </td>
@@ -139,12 +139,11 @@
     <br>
     <br>
     <div class="container-fluid" style="display: flex;justify-content: flex-start;align-items: center;gap: 20px;position: fixed;
-  bottom: 0px;background-color: #e9ecef;">
+        bottom: 0px;background-color: #e9ecef;">
       <div class="col-md-12">
         <h4 class="text-center" style="font-size: 20px;margin: 15px;">Infinity Sales Group</h4>
       </div>
     </div>
-
 
     <!-- Modal wireless-->
     <div class="modal fade" id="wirelessDevice" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" #wirelessDeviceModal>
