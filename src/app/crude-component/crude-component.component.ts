@@ -510,65 +510,68 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   delete(id: any) {
+    if (confirm("Are you sure you want to delete this item?")) {
 
-    if (this.table_wireless_device) {
+      if (this.table_wireless_device) {
 
-      this.storeService.deletewireless_device(id).subscribe(
-        (resp) => {
-          this.search.per_page = this.numRows;
-          this.search.page = this.current_page;
-          this.storeService.getwireless_device(this.search).subscribe(
-            (data: any) => {
-              let items = data.data;
-              items.forEach((item: any) => {
-                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
-                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
-              })
-              this.TR = items;
-            }
-          )
+        this.storeService.deletewireless_device(id).subscribe(
+          (resp) => {
+            this.search.per_page = this.numRows;
+            this.search.page = this.current_page;
+            this.storeService.getwireless_device(this.search).subscribe(
+              (data: any) => {
+                let items = data.data;
+                items.forEach((item: any) => {
+                  item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                  item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+                })
+                this.TR = items;
+              }
+            )
+          }
+        )
 
+      }
 
-        }
-      )
+      if (this.table_devide_type) {
+
+        this.storeService.deleteDevice_type(id).subscribe(
+          (resp) => {
+
+            this.storeService.getDevice_type().subscribe(
+              (data: any) => {
+                this.TR = data.data;
+              }
+            )
+
+          }
+        )
+
+      }
+
+      if (this.table_phone_manufacturers) {
+
+        this.storeService.deletephone_manufacturer(Number(id)).subscribe(
+          (resp) => {
+            console.log(resp)
+
+            this.storeService.getphone_manufacturer().subscribe(
+              (data: any) => {
+
+                let items = data.data;
+
+                this.TR = items;
+              }
+            )
+
+          }
+        )
+
+      }
+
 
     }
 
-    if (this.table_devide_type) {
-
-      this.storeService.deleteDevice_type(id).subscribe(
-        (resp) => {
-
-          this.storeService.getDevice_type().subscribe(
-            (data: any) => {
-              this.TR = data.data;
-            }
-          )
-
-        }
-      )
-
-    }
-
-    if (this.table_phone_manufacturers) {
-
-      this.storeService.deletephone_manufacturer(Number(id)).subscribe(
-        (resp) => {
-          console.log(resp)
-
-          this.storeService.getphone_manufacturer().subscribe(
-            (data: any) => {
-
-              let items = data.data;
-
-              this.TR = items;
-            }
-          )
-
-        }
-      )
-
-    }
   }
 
   editWirelessDevice(id: any) {
@@ -666,7 +669,8 @@ export class CrudeComponentComponent implements OnInit {
         (data: any) => {
           this.itemsOptionsFilterDeviceType = data.data;
         }
-      )}
+      )
+    }
 
   }
 
@@ -944,7 +948,7 @@ export class CrudeComponentComponent implements OnInit {
     window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_blank');
   }
 
-  goBackHome(){
+  goBackHome() {
     window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_self');
   }
 }
