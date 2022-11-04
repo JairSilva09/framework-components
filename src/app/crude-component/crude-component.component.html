@@ -19,12 +19,6 @@
       </div>
     </div>
 
-    <!-- <button (click)="get_wireless_device('1')" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_wireless_device">Wireless device</button>
-        <button (click)="get_phone_manufacturers()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_phone_manufacturers">Phone manufacturers</button>
-        <button (click)="get_device_type()" type="button" class="btn btn-primary btn-sm mx-2" [disabled]="table_devide_type">Device Type</button>
-              
-        -->
-
     <div class="d-flex justify-content-between row my-3">
       <div *ngIf="table_wireless_device" class="col-md-6" style="display: flex;gap: 10px;">
         <div class="input-group mb-3" style="width: 820px;">
@@ -123,7 +117,7 @@
               </td>
               <td><button *ngIf="table_devide_type" (click)="edit(item.id)" type="button" class="btn btn-info btn-sm"
                   data-bs-toggle="modal" data-bs-target="#devideType">Edit</button></td>
-              <td><button (click)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
+              <td><button (dblclick)="delete(item.id)" type="button" class="btn btn-danger btn-sm" data-bs-toggle="tooltip"
                   data-bs-custom-class="custom-tooltip" title="double click">Delete</button></td>
             </tr>
           </tbody>
@@ -243,8 +237,6 @@
         </div>
       </div>
     </div>
-
-
 
     <lottie-player *ngIf="loadingData" style="
       position: absolute;

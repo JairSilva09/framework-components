@@ -157,7 +157,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    if (this.userIslogin) {
+    if (true) {
       fromEvent(this.searchBar.nativeElement, 'keyup')
         .pipe(
           filter(Boolean),
@@ -344,8 +344,9 @@ export class CrudeComponentComponent implements OnInit {
     if (this.action == "Update") {
 
       if (this.table_wireless_device) {
-        this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
-        this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
+       
+        //this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
+        //this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
 
         let newWirelessDevice = {
           "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
@@ -405,8 +406,7 @@ export class CrudeComponentComponent implements OnInit {
         );
       }
 
-      if (this.table_phone_manufacturers) {
-        console.log(this.phoneManufacturersForm)
+      if (this.table_phone_manufacturers) {       
 
         let newPhoneManufacturer = {
           "id": this.phoneManufacturersForm.id,
@@ -421,6 +421,8 @@ export class CrudeComponentComponent implements OnInit {
         )
 
       }
+
+      this.action = "Save"
 
     } else {
 
@@ -591,6 +593,7 @@ export class CrudeComponentComponent implements OnInit {
           this.wirelessDevicesForm.device_name = item.device_name;
           this.wirelessDevicesForm.manufacturer_id = item.manufacturer_id;
           this.wirelessDevicesForm.device_type = item.device_type;
+          this.wirelessDevicesForm.device_type_name = item.device_type_name;
           this.wirelessDevicesForm.description = item.description;
         }
 
@@ -752,7 +755,9 @@ export class CrudeComponentComponent implements OnInit {
     this.phoneManufacturersForm.insert_date = '';
     this.wirelessDevicesForm.device_name = '';
     this.wirelessDevicesForm.device_type = '';
+    this.wirelessDevicesForm.device_type_name = 'Choose...',
     this.wirelessDevicesForm.manufacturer_id = '';
+    this.wirelessDevicesForm.manufacturer_name = 'Choose...',
     this.wirelessDevicesForm.description = '';
     this.deviceTypeForm.name = '';
     this.deviceTypeForm.id = '';
@@ -931,7 +936,7 @@ export class CrudeComponentComponent implements OnInit {
   settingFilterManufacturer(filter: string) {
     if (filter == 'Select one') {
       filter = '';
-    }
+    }   
     this.search.manufacturer = filter
     this.getWirelessBySearch(this.search)
   }

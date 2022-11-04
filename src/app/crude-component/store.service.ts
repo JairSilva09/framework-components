@@ -34,13 +34,14 @@ export class StoreService {
   }
 
   postDevice_type(device: any) {
+    debugger
     // let device = {
     //   "name": deviceName
     // }
     return this.http.post(environment.webBaseUrl + this._isgoe_device_type, device, httpOptions);
   }
 
-  putDevice_type(deviceId: any) {
+  putDevice_type(deviceId: any) {  
     let device = {
       "name": deviceId.name
     }
@@ -88,7 +89,7 @@ export class StoreService {
   }
 
   getWirelessSearch(search: any){
-    console.log(search)
+
     let isgoe_wireless_device = 'isgoe/wireless_device?page=';
     
     let url = '&per_page='+search.per_page+'&manufacturer='+search.manufacturer+'&search_key='+search.search_key+'&device_type='+search.device_type+'&device_name='+search.device_name;
@@ -103,7 +104,6 @@ export class StoreService {
     // }
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device, device, httpOptions);
   }
-
 
   postwireless_devicebulk_update (device: any) {
 
@@ -120,13 +120,7 @@ export class StoreService {
     return this.http.post(environment.webBaseUrl + this._isgoe_wireless_device_bulk_update, device, httpOptions);
   }
 
-
-
-
-
-
-
-  putwireless_device(deviceId: any) {   
+  putwireless_device(deviceId: any) {    
  
     let name = {
       "device_name": deviceId.device_name,
