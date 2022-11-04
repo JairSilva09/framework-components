@@ -18,6 +18,7 @@ export class StoreService {
   private _isgoe_phone_manufacturer = 'isgoe/phone_manufacturer';
   private _isgoe_wireless_device = 'isgoe/wireless_device';
   private _isgoe_wireless_device_bulk_update = 'isgoe/wireless_device/bulk_update';
+  private _isgoe_phone_manufacturer_bulk_update = 'isgoe/phone_manufacturer/bulk_update';
 
   constructor(private http: HttpClient) { }
 
@@ -70,6 +71,21 @@ export class StoreService {
       "active": deviceId.active,
     }
     return this.http.put(environment.webBaseUrl + this._isgoe_phone_manufacturer + '/' + deviceId.id, name, httpOptions);
+  }
+
+  postPhone_manufacturer_bulk_update (device: any) {
+
+    //   let device2 =  [
+    //     {
+    //         "id":"69254",
+    //         "active": "1"
+    //     },
+    //     {
+    //         "id":"69254",
+    //         "active": "0"
+    //     }
+    // ]
+    return this.http.post(environment.webBaseUrl + this._isgoe_phone_manufacturer_bulk_update, device, httpOptions);
   }
 
   deletephone_manufacturer(deviceId: any) {

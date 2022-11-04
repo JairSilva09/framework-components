@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ComponentFactoryResolver } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { debounceTime, delay, distinctUntilChanged, filter, tap } from 'rxjs/operators';
 import { StoreService } from './store.service';
@@ -14,6 +14,11 @@ export class CrudeComponentComponent implements OnInit {
   @ViewChild('deviceType') deviceType!: ElementRef;
   @ViewChild('itemcheckbox') itemcheckbox!: ElementRef;
   @ViewChild('searchBar') searchBar!: ElementRef;
+  @ViewChild('wirelessDeviceModal') wirelessDeviceModal!: ElementRef;
+  @ViewChild('phoneManufacturersModal') phoneManufacturersModal!: ElementRef;
+  @ViewChild('devideTypeModal') devideTypeModal!: ElementRef;
+
+  myModalEl: any;
 
   table_devide_type: boolean = false;
   table_wireless_device: boolean = true;
@@ -116,7 +121,6 @@ export class CrudeComponentComponent implements OnInit {
   constructor(private storeService: StoreService) { }
 
   ngOnInit(): void {
-
    
     this.get_wireless_device(this.page.toString());
 
@@ -164,6 +168,22 @@ export class CrudeComponentComponent implements OnInit {
         )
         .subscribe();
     }
+    
+    this.wirelessDeviceModal.nativeElement.addEventListener('hidden.bs.modal',(event: any) => {
+      this.reset();
+      this.action = "Save"
+    })
+
+    this.phoneManufacturersModal.nativeElement.addEventListener('hidden.bs.modal',(event: any) => {
+      this.reset();
+      this.action = "Save"
+    })
+
+    this.devideTypeModal.nativeElement.addEventListener('hidden.bs.modal',(event: any) => {
+      this.reset();
+      this.action = "Save"
+    })
+
   }
 
   getWirelessBySearch(keyword: any) {
@@ -174,20 +194,14 @@ export class CrudeComponentComponent implements OnInit {
 
         let items = data.data
         items.forEach((item: any) => {
-          // if(item.active == "0"){
-          //   item.active = "No"
-          // }
-
-          // if(item.active == "1"){
-          //   item.active = 'Yes'
-          // }
+         
           item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
           item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
          
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
-        if (this.numItemsActive == 10) {
+        if (this.numItemsActive == items.length) {
           this.AllCheckbox = true;
         } else {
           this.AllCheckbox = false;
@@ -219,20 +233,14 @@ export class CrudeComponentComponent implements OnInit {
         let items = data.data;
         console.log(data.data)
         items.forEach((item: any) => {        
-          // if(item.active == "0"){
-          //   item.active = "No"
-          // }
-
-          // if(item.active == "1"){
-          //   item.active = 'Yes'
-          // }
+          
           item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
 
           item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
-        if (this.numItemsActive == 10) {
+        if (this.numItemsActive == items.length) {
           this.AllCheckbox = true;
         } else {
           this.AllCheckbox = false;
@@ -276,6 +284,13 @@ export class CrudeComponentComponent implements OnInit {
 
         let items = data.data;
 
+        this.numItemsActive = items.filter((a: any) => a.active == "1").length;
+        if (this.numItemsActive == items.length) {
+          this.AllCheckbox = true;
+        } else {
+          this.AllCheckbox = false;
+        }
+
         this.TR = items;
         this.COLUMNS = this.COLUMNS_PHONE_MANUFACTURERS;
       }
@@ -305,8 +320,8 @@ export class CrudeComponentComponent implements OnInit {
 
       if (this.table_wireless_device) {
        
-        this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
-        this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
+        //this.wirelessDevicesForm.manufacturer_id = this.manufacturer.nativeElement.value;
+        //this.wirelessDevicesForm.device_type = this.deviceType.nativeElement.value;
 
         let newWirelessDevice = {
           "manufacturer_id": this.wirelessDevicesForm.manufacturer_id,
@@ -324,16 +339,7 @@ export class CrudeComponentComponent implements OnInit {
             this.storeService.getwireless_device(this.search).subscribe(
               (data: any) => {
                 let items = data.data;
-                // items.forEach((item: any) => {
-                //   if (item.active == "0") {
-                //     item.active = "No"
-                //   }
-
-                //   if (item.active == "1") {
-                //     item.active = "<input class='form-check-input me-1' type='checkbox' value='' aria-label='...'>"
-                //   }
-                  
-                // })
+               
                 items.forEach((item: any) => {
                   item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
                   item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
@@ -368,7 +374,6 @@ export class CrudeComponentComponent implements OnInit {
       }
 
       if (this.table_phone_manufacturers) {
-        console.log(this.phoneManufacturersForm)
 
         let newPhoneManufacturer = {
           "id": this.phoneManufacturersForm.id,
@@ -377,13 +382,28 @@ export class CrudeComponentComponent implements OnInit {
 
         this.storeService.putphone_manufacturer(newPhoneManufacturer).subscribe(
           (result: any) => {
-            console.log(result)
-
+            this.storeService.getphone_manufacturer().subscribe(
+              (data: any) => {
+                this.total_pages = data.meta.last_page;
+                this.current_page = data.meta.current_page;
+        
+                let items = data.data;
+        
+                this.numItemsActive = items.filter((a: any) => a.active == "1").length;
+                if (this.numItemsActive == items.length) {
+                  this.AllCheckbox = true;
+                } else {
+                  this.AllCheckbox = false;
+                }
+        
+                this.TR = items;
+              }
+            )          
           }
         )
 
       }
-
+      this.action = "Save"      
     } else {
 
       //----------------add----------------------//      
@@ -563,6 +583,7 @@ export class CrudeComponentComponent implements OnInit {
           this.wirelessDevicesForm.manufacturer_name = item.manufacturer_name;
           this.wirelessDevicesForm.manufacturer_id = item.manufacturer_id;
           this.wirelessDevicesForm.device_type = item.device_type;
+          this.wirelessDevicesForm.device_type_name = item.device_type_name;
           this.wirelessDevicesForm.description = item.description;
         }
 
@@ -668,7 +689,7 @@ export class CrudeComponentComponent implements OnInit {
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
-        if (this.numItemsActive == 10) {
+        if (this.numItemsActive == items.length) {
           this.AllCheckbox = true;
         } else {
           this.AllCheckbox = false;
@@ -696,7 +717,7 @@ export class CrudeComponentComponent implements OnInit {
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
-        if (this.numItemsActive == 10) {
+        if (this.numItemsActive == items.length) {
           this.AllCheckbox = true;
         } else {
           this.AllCheckbox = false;
@@ -713,7 +734,9 @@ export class CrudeComponentComponent implements OnInit {
     this.phoneManufacturersForm.insert_date = '';
     this.wirelessDevicesForm.device_name = '';
     this.wirelessDevicesForm.device_type = '';
+    this.wirelessDevicesForm.device_type_name = 'Choose...';
     this.wirelessDevicesForm.manufacturer_id = '';
+    this.wirelessDevicesForm.manufacturer_name = 'Choose...',
     this.wirelessDevicesForm.description = '';
     this.deviceTypeForm.name = '';
     this.deviceTypeForm.id = '';
@@ -760,7 +783,7 @@ export class CrudeComponentComponent implements OnInit {
               })
               this.numItemsActive = items.filter((a: any) => a.active == "1").length;
               this.TR = items;
-              if (this.numItemsActive == 10) {
+              if (this.numItemsActive == items.length) {
                 this.AllCheckbox = true
               } else {
                 this.AllCheckbox = false
@@ -790,6 +813,13 @@ export class CrudeComponentComponent implements OnInit {
             (data: any) => {
 
               let items = data.data;
+              this.numItemsActive = items.filter((a: any) => a.active == "1").length;
+           
+              if (this.numItemsActive == items.length) {
+                this.AllCheckbox = true
+              } else {
+                this.AllCheckbox = false
+              }
               this.TR = items;
 
             }
@@ -870,23 +900,42 @@ export class CrudeComponentComponent implements OnInit {
       // })
     })
 
+    if(this.table_wireless_device){
+      this.storeService.postwireless_devicebulk_update(bulkItemsToBeSendToUpdate).subscribe(
+        (data: any) => {     
+          this.device_type_data = data.data;
+          this.loadingData = false;
+          this.storeService.getwireless_device(this.search).subscribe(
+            (data: any) => {
+              let items = data.data;
+              items.forEach((item: any) => {
+                item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+                item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+              })
+              this.TR = items;
+            }
+          )
+        }
+      )
+    }
 
-    this.storeService.postwireless_devicebulk_update(bulkItemsToBeSendToUpdate).subscribe(
-      (data: any) => {
-        this.device_type_data = data.data;
-        this.loadingData = false;
-        this.storeService.getwireless_device(this.search).subscribe(
-          (data: any) => {
-            let items = data.data;
-            items.forEach((item: any) => {
-              item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-              item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
-            })
-            this.TR = items;
+    if(this.table_phone_manufacturers){
+      this.storeService.postPhone_manufacturer_bulk_update(bulkItemsToBeSendToUpdate).subscribe(
+        (data: any) => {
+          console.log(data)
+          let items = data.data;          
+          this.TR = items;
+
+          if (newStateCheckbox == "1") {
+            this.AllCheckbox = true;
+          } else {
+            this.AllCheckbox = false;
           }
-        )
-      }
-    )
+
+          this.loadingData = false;
+        }
+      )
+    }
   }
 
   settingFilterManufacturer(filter: string) {
