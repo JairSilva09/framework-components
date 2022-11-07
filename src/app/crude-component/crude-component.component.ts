@@ -954,6 +954,10 @@ export class CrudeComponentComponent implements OnInit {
     this.getWirelessBySearch(this.search)
   }
 
+  getAlgo(){
+
+  }  
+
   goToUrl() {
     window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_blank');
   }
