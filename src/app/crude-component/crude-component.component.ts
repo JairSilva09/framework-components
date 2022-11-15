@@ -23,7 +23,7 @@ export class CrudeComponentComponent implements OnInit {
   table_devide_type: boolean = false;
   table_wireless_device: boolean = true;
   table_phone_manufacturers: boolean = false;
-  userIslogin: boolean = false;
+  userIslogin: boolean = true;
 
   TH: any = [];
   TR: any = [];
@@ -121,7 +121,19 @@ export class CrudeComponentComponent implements OnInit {
   constructor(private storeService: StoreService) { }
 
   ngOnInit(): void {
-   
+
+    this.storeService.getDevice_type().subscribe(
+      (data: any) => {
+        this.device_type_data = data.data;
+      }
+    )
+
+    this.storeService.getphone_manufacturer().subscribe(
+      (data: any) => {
+        this.phone_manufacturers_data = data.data;
+      }
+    )
+
     this.get_wireless_device(this.page.toString());
 
     this.selectedDeviceType('device type')
@@ -140,7 +152,6 @@ export class CrudeComponentComponent implements OnInit {
 
             this.search.search_key = this.searchBar.nativeElement.value,
               this.search.per_page = this.numRows;
-              console.log(this.search.search_key)
 
             this.getWirelessBySearch(this.search)
 
@@ -174,10 +185,19 @@ export class CrudeComponentComponent implements OnInit {
 
         let items = data.data
         items.forEach((item: any) => {
-         
-          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
-         
+          // if(item.active == "0"){
+          //   item.active = "No"
+          // }
+
+          // if(item.active == "1"){
+          //   item.active = 'Yes'
+          // }
+          item.device_type_name = (this.device_type_data.filter((a: any) => a.id == item.device_type).length > 0) ? this.device_type_data.filter((a: any) => a.id == item.device_type)[0].name : "";
+
+          item.manufacturer_name = (this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id).length > 0) ? this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id)[0].name : ""
+
+          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -190,6 +210,29 @@ export class CrudeComponentComponent implements OnInit {
         console.log(data)
       }
     )
+  }
+
+  getTypeDeviceName(id: any) {
+
+    let name = "";
+
+    this.device_type_data.forEach((item: any) => {
+      if (item.id == id) {
+        name = item.name
+      }
+    })
+
+    return name
+  }
+
+  getNameManufacturer(id: any) {
+    let name = "";
+    this.phone_manufacturers_data.forEach((item: any) => {
+      if (item.id == id) {
+        name = item.name
+      }
+    })
+    return name
   }
 
   get_wireless_device(page: string) {
@@ -211,12 +254,20 @@ export class CrudeComponentComponent implements OnInit {
         this.current_page = data.meta.current_page;
 
         let items = data.data;
-        console.log(data.data)
-        items.forEach((item: any) => {        
-          
-          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
+        console.log(data)
+        items.forEach((item: any) => {
+          // if(item.active == "0"){
+          //   item.active = "No"
+          // }
 
-          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+          // if(item.active == "1"){
+          //   item.active = 'Yes'
+          // }
+          item.device_type_name = (this.device_type_data.filter((a: any) => a.id == item.device_type).length > 0) ? this.device_type_data.filter((a: any) => a.id == item.device_type)[0].name : "";
+
+          item.manufacturer_name = (this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id).length > 0) ? this.phone_manufacturers_data.filter((a: any) => a.id == item.manufacturer_id)[0].name : ""
+          //item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          //item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
         this.TR = items;
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -233,6 +284,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_device_type() {
+    console.log('device type')
 
     this.TH = this.TH_DEVICE_TYPE;
     this.table_devide_type = true;
@@ -251,6 +303,7 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   get_phone_manufacturers() {
+    console.log('manufacturer')
 
     this.table_devide_type = false;
     this.table_phone_manufacturers = true;
@@ -319,14 +372,22 @@ export class CrudeComponentComponent implements OnInit {
             this.storeService.getwireless_device(this.search).subscribe(
               (data: any) => {
                 let items = data.data;
-               
                 items.forEach((item: any) => {
-                  item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-                  item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+                  if (item.active == "0") {
+                    item.active = "No"
+                  }
+
+                  if (item.active == "1") {
+                    item.active = "<input class='form-check-input me-1' type='checkbox' value='' aria-label='...'>"
+                  }
+                  item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                  item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
                 })
 
                 this.TR = items;
                 console.log(this.TR)
+
+                this.COLUMNS = this.COLUMNS_WIRELESS_DEVICE;
               }
             )
           },
@@ -353,7 +414,7 @@ export class CrudeComponentComponent implements OnInit {
         );
       }
 
-      if (this.table_phone_manufacturers) {
+      if (this.table_phone_manufacturers) {       
 
         let newPhoneManufacturer = {
           "id": this.phoneManufacturersForm.id,
@@ -383,7 +444,9 @@ export class CrudeComponentComponent implements OnInit {
         )
 
       }
-      this.action = "Save"      
+
+      this.action = "Save"
+
     } else {
 
       //----------------add----------------------//      
@@ -472,65 +535,68 @@ export class CrudeComponentComponent implements OnInit {
   }
 
   delete(id: any) {
+    if (confirm("Are you sure you want to delete this item?")) {
 
-    if (this.table_wireless_device) {
+      if (this.table_wireless_device) {
 
-      this.storeService.deletewireless_device(id).subscribe(
-        (resp) => {
-          this.search.per_page = this.numRows;
-          this.search.page = this.current_page;
-          this.storeService.getwireless_device(this.search).subscribe(
-            (data: any) => {
-              let items = data.data;
-              items.forEach((item: any) => {
-                item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-                item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
-              })
-              this.TR = items;
-            }
-          )
+        this.storeService.deletewireless_device(id).subscribe(
+          (resp) => {
+            this.search.per_page = this.numRows;
+            this.search.page = this.current_page;
+            this.storeService.getwireless_device(this.search).subscribe(
+              (data: any) => {
+                let items = data.data;
+                items.forEach((item: any) => {
+                  item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                  item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+                })
+                this.TR = items;
+              }
+            )
+          }
+        )
 
+      }
 
-        }
-      )
+      if (this.table_devide_type) {
+
+        this.storeService.deleteDevice_type(id).subscribe(
+          (resp) => {
+
+            this.storeService.getDevice_type().subscribe(
+              (data: any) => {
+                this.TR = data.data;
+              }
+            )
+
+          }
+        )
+
+      }
+
+      if (this.table_phone_manufacturers) {
+
+        this.storeService.deletephone_manufacturer(Number(id)).subscribe(
+          (resp) => {
+            console.log(resp)
+
+            this.storeService.getphone_manufacturer().subscribe(
+              (data: any) => {
+
+                let items = data.data;
+
+                this.TR = items;
+              }
+            )
+
+          }
+        )
+
+      }
+
 
     }
 
-    if (this.table_devide_type) {
-
-      this.storeService.deleteDevice_type(id).subscribe(
-        (resp) => {
-
-          this.storeService.getDevice_type().subscribe(
-            (data: any) => {
-              this.TR = data.data;
-            }
-          )
-
-        }
-      )
-
-    }
-
-    if (this.table_phone_manufacturers) {
-
-      this.storeService.deletephone_manufacturer(Number(id)).subscribe(
-        (resp) => {
-          console.log(resp)
-
-          this.storeService.getphone_manufacturer().subscribe(
-            (data: any) => {
-
-              let items = data.data;
-
-              this.TR = items;
-            }
-          )
-
-        }
-      )
-
-    }
   }
 
   editWirelessDevice(id: any) {
@@ -542,25 +608,12 @@ export class CrudeComponentComponent implements OnInit {
 
     if (this.table_wireless_device) {
 
-      this.storeService.getphone_manufacturer().subscribe(
-        (data: any) => {
-          this.phone_manufacturers_data = data.data;
-        }
-      )
-  
-      this.storeService.getDevice_type().subscribe(
-        (data: any) => {
-          this.device_type_data = data.data;
-        }
-      )
-
       this.TR.forEach((item: any) => {
 
         if (item.id == id) {
           console.log(item)
           this.wirelessDevicesForm.id = item.id;
           this.wirelessDevicesForm.device_name = item.device_name;
-          this.wirelessDevicesForm.manufacturer_name = item.manufacturer_name;
           this.wirelessDevicesForm.manufacturer_id = item.manufacturer_id;
           this.wirelessDevicesForm.device_type = item.device_type;
           this.wirelessDevicesForm.device_type_name = item.device_type_name;
@@ -642,7 +695,8 @@ export class CrudeComponentComponent implements OnInit {
         (data: any) => {
           this.itemsOptionsFilterDeviceType = data.data;
         }
-      )}
+      )
+    }
 
   }
 
@@ -664,8 +718,13 @@ export class CrudeComponentComponent implements OnInit {
         let items = data.data;
 
         items.forEach((item: any) => {
-          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+
+          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+
+          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
+
+          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -692,8 +751,13 @@ export class CrudeComponentComponent implements OnInit {
         let items = data.data;
 
         items.forEach((item: any) => {
-          item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-          item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+
+          //item.device_type_name = this.device_type_data.filter((a:any) => a.id == item.device_type)[0].name
+
+          //item.manufacturer_name = this.phone_manufacturers_data.filter((a:any) => a.id == item.manufacturer_id)[0].name
+
+          item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+          item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
         })
 
         this.numItemsActive = items.filter((a: any) => a.active == "1").length;
@@ -714,7 +778,7 @@ export class CrudeComponentComponent implements OnInit {
     this.phoneManufacturersForm.insert_date = '';
     this.wirelessDevicesForm.device_name = '';
     this.wirelessDevicesForm.device_type = '';
-    this.wirelessDevicesForm.device_type_name = 'Choose...';
+    this.wirelessDevicesForm.device_type_name = 'Choose...',
     this.wirelessDevicesForm.manufacturer_id = '';
     this.wirelessDevicesForm.manufacturer_name = 'Choose...',
     this.wirelessDevicesForm.description = '';
@@ -758,8 +822,8 @@ export class CrudeComponentComponent implements OnInit {
             (data: any) => {
               let items = data.data;
               items.forEach((item: any) => {
-                item.device_type_name = (item.device_type_info.name)?item.device_type_info.name:"N/A";
-                item.manufacturer_name = (item.phone_manufacture.name)?item.phone_manufacture.name:"N/A";
+                item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+                item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
               })
               this.numItemsActive = items.filter((a: any) => a.active == "1").length;
               this.TR = items;
@@ -899,29 +963,31 @@ export class CrudeComponentComponent implements OnInit {
       )
     }
 
-    if(this.table_phone_manufacturers){
-      this.storeService.postPhone_manufacturer_bulk_update(bulkItemsToBeSendToUpdate).subscribe(
-        (data: any) => {
-          console.log(data)
-          let items = data.data;          
-          this.TR = items;
-
-          if (newStateCheckbox == "1") {
-            this.AllCheckbox = true;
-          } else {
-            this.AllCheckbox = false;
+    this.storeService.postwireless_devicebulk_update(bulkItemsToBeSendToUpdate).subscribe(
+      (data: any) => {
+        this.device_type_data = data.data;
+        this.loadingData = false;
+        this.storeService.getwireless_device(this.search).subscribe(
+          (data: any) => {
+            let items = data.data;
+            items.forEach((item: any) => {
+              item.device_type_name = this.getTypeDeviceName(Number(item.device_type));
+              item.manufacturer_name = this.getNameManufacturer(Number(item.manufacturer_id))
+            })
+            this.TR = items;
           }
+        )
 
           this.loadingData = false;
         }
-      )
-    }
+    )
+    
   }
 
   settingFilterManufacturer(filter: string) {
     if (filter == 'Select one') {
       filter = '';
-    }
+    }   
     this.search.manufacturer = filter
     this.getWirelessBySearch(this.search)
   }
@@ -932,17 +998,13 @@ export class CrudeComponentComponent implements OnInit {
     }
     this.search.device_type = filter
     this.getWirelessBySearch(this.search)
-  }
-
-  getAlgo(){
-
   }  
 
   goToUrl() {
     window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_blank');
   }
 
-  goBackHome(){
+  goBackHome() {
     window.open('https://satprocess.com/broadbandAdmin/index.php/default/index', '_self');
   }
 }
