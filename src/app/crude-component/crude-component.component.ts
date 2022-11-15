@@ -125,27 +125,7 @@ export class CrudeComponentComponent implements OnInit {
     this.get_wireless_device(this.page.toString());
 
     this.selectedDeviceType('device type')
-    this.selectedManufacturer('manufacturer')
-
-    // this.storeService.isLoginService().subscribe({
-    //   next: (data: any) => {
-    //     if (data.loginStatus) {
-    //       this.userIslogin = true;
-    //       console.log('user is logged in');
-    //     } else {
-    //       this.userIslogin = false;
-    //       console.log('user is not logged in');
-    //      this.goBackHome();
-    //     }
-    //   },
-    //   error: (e) => {
-    //     console.log('error');
-    //   },
-    //   complete: () => {
-    //     console.log('complete');
-    //   },
-    // }
-    // )
+    this.selectedManufacturer('manufacturer')   
 
   }
 

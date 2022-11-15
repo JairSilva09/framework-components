@@ -55,7 +55,7 @@ export class StoreService {
   // manufacturer
   getphone_manufacturer() {
     // let url = setting.page+'&per_page='+setting.per_page+'&manufacturer='+setting.manufacturer+'&search_key='+setting.search_key+'&device_type='+setting.device_type;
-    return this.http.get(environment.webBaseUrl + this._isgoe_phone_manufacturer + '?per_page=1000', httpOptions);
+    return this.http.get(environment.webBaseUrl + this._isgoe_phone_manufacturer + '?per_page=1000&page=1', httpOptions);
   }
 
   postphone_manufacturer(device: any) {
