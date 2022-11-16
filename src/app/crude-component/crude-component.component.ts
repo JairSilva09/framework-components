@@ -682,7 +682,7 @@ export class CrudeComponentComponent implements OnInit {
   chooseNumRows(rows: string) {
     this.numRows = rows;
     this.search.per_page = rows;
-    // this.search.page = "1";
+    this.search.page = "1";
     this.storeService.getwireless_device(this.search).subscribe(
       (data: any) => {
 
