@@ -45,7 +45,7 @@ export class StoreService {
     let device = {
       "name": deviceId.name
     }
-    return this.http.put(environment.webBaseUrl + this._isgoe_device_type + '/' + deviceId.id, device, httpOptions);
+    return this.http.put(environment.webBaseUrl + this._isgoe_device_type + '/' + deviceId.id+"?page=1", device, httpOptions);
   }
 
   deleteDevice_type(deviceId: any) {
