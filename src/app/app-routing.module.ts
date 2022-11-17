@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CrudeComponentComponent } from './crude-component/crude-component.component';
 import { WirelessDeviceManagementComponent } from './wireless-device-management/wireless-device-management.component';
 
 
