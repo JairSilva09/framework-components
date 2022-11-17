@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
  
-  title = 'framework-components';
+  title = 'wireless-device-management';
 
   ngOnInit(): void {
    

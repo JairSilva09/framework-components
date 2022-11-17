@@ -1,6 +1,6 @@
 {
   "hosting": {
-    "public": "dist/framework-components",
+    "public": "dist/wireless-device-management",
     "ignore": [
       "firebase.json",
       "**/.*",
