@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { CrudeComponentComponent } from './crude-component/crude-component.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TokenInterceptorService } from './wireless-device-management/token-interceptor.service';
@@ -15,7 +14,6 @@ import { WirelessDeviceManagementComponent } from './wireless-device-management/
 @NgModule({
   declarations: [
     AppComponent,
-    CrudeComponentComponent,
     PaginationComponent,
     WirelessDeviceManagementComponent
   ],
