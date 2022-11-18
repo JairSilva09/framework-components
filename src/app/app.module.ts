@@ -13,6 +13,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ExcelImportExportComponent } from './excel-import-export/excel-import-export.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PaginationComponent } from './pagination/pagination.component';
     ItemComponent,
     StoreComponent,
     ItemCardComponent,
-    PaginationComponent
+    PaginationComponent,
+    ExcelImportExportComponent
   ],
   imports: [
     HttpClientModule,
