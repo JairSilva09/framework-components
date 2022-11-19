@@ -15,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ExcelImportExportComponent } from './excel-import-export/excel-import-export.component';
 import { TableComponent } from './table/table.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { TableComponent } from './table/table.component';
     ItemCardComponent,
     PaginationComponent,
     ExcelImportExportComponent,
-    TableComponent
+    TableComponent,
+    SearchBoxComponent
   ],
   imports: [
     HttpClientModule,
