@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { StoreComponent } from './store/store.component';
+import { ExcelImportExportComponent } from './excel-import-export/excel-import-export.component';
 
 const routes: Routes = [
-  {path: 'store',component: StoreComponent},
-  { path: '**', pathMatch: 'full', redirectTo: 'store' },
+  {path: 'file',component: ExcelImportExportComponent},
+  { path: '**', pathMatch: 'full', redirectTo: 'file' },
 ];
 
 @NgModule({

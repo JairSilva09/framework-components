@@ -14,6 +14,7 @@ import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './pagination/pagination.component';
 import { ExcelImportExportComponent } from './excel-import-export/excel-import-export.component';
+import { TableComponent } from './table/table.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ExcelImportExportComponent } from './excel-import-export/excel-import-e
     StoreComponent,
     ItemCardComponent,
     PaginationComponent,
-    ExcelImportExportComponent
+    ExcelImportExportComponent,
+    TableComponent
   ],
   imports: [
     HttpClientModule,
