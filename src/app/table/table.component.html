@@ -2,41 +2,35 @@
 <div class="container">
     <div class="row d-flex justify-content-center my-3">
         <div class="col-md-3">
-            <app-search-box></app-search-box>
+            <app-search-box (search)="searchBy($event)"></app-search-box>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-12">
-            <table class="table">
-                <thead>
-                  <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                    <td>@mdo</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">2</th>
-                    <td>Jacob</td>
-                    <td>Thornton</td>
-                    <td>@fat</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">3</th>
-                    <td colspan="2">Larry the Bird</td>
-                    <td>@twitter</td>
-                  </tr>
-                </tbody>
-              </table>
+    <div class="row" style="margin-bottom: 35px">
+      <div class="col-md-12">
+        <table class="table">
+            <thead>
+              <tr>                  
+                <th scope="col">Client</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataSource">                    
+                <td>{{item.client}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.category}}</td>
+              </tr>                 
+            </tbody>
+          </table>
+      </div>
+      <app-excel-import-export [data]="dataSource" (dataImport)="importedData($event)"></app-excel-import-export>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-row">
+        <div class="input-group">     
+          <textarea class="form-control" rows="10" aria-label="With textarea">{{imported}}</textarea>
         </div>
-        <app-excel-import-export></app-excel-import-export>
+      </div>
     </div>
 </div>
