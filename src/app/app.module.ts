@@ -13,6 +13,9 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS } from '@angular/material/snack-bar';
 import { HttpClientModule } from '@angular/common/http';
 import { PaginationComponent } from './pagination/pagination.component';
+import { ExcelImportExportComponent } from './excel-import-export/excel-import-export.component';
+import { TableComponent } from './table/table.component';
+import { SearchBoxComponent } from './search-box/search-box.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +24,10 @@ import { PaginationComponent } from './pagination/pagination.component';
     ItemComponent,
     StoreComponent,
     ItemCardComponent,
-    PaginationComponent
+    PaginationComponent,
+    ExcelImportExportComponent,
+    TableComponent,
+    SearchBoxComponent
   ],
   imports: [
     HttpClientModule,

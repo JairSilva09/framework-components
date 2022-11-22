@@ -1,0 +1,36 @@
+
+<div class="container">
+    <div class="row d-flex justify-content-center my-3">
+        <div class="col-md-3">
+            <app-search-box (search)="searchBy($event)"></app-search-box>
+        </div>
+    </div>
+    <div class="row" style="margin-bottom: 35px">
+      <div class="col-md-12">
+        <table class="table">
+            <thead>
+              <tr>                  
+                <th scope="col">Client</th>
+                <th scope="col">Name</th>
+                <th scope="col">Category</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of dataSource">                    
+                <td>{{item.client}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.category}}</td>
+              </tr>                 
+            </tbody>
+          </table>
+      </div>
+      <app-excel-import-export [data]="dataSource" (dataImport)="importedData($event)"></app-excel-import-export>
+    </div>
+    <div class="row mb-3">
+      <div class="col-md-row">
+        <div class="input-group">     
+          <textarea class="form-control" rows="10" aria-label="With textarea">{{imported}}</textarea>
+        </div>
+      </div>
+    </div>
+</div>
