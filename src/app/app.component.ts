@@ -13,4 +13,9 @@ export class AppComponent implements OnInit {
    
   }
 
+  evento(e: any){
+    console.log(e.buttons)
+   
+  }
+
 }

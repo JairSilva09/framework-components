@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 
 @Component({
@@ -62,5 +62,14 @@ export class TableComponent implements OnInit {
     }
        
   }
+  
+  // @HostListener('contextmenu')
+  // onRightClick(){
+  
+  //   console.log("contextual")
+
+  //   return false;
+  
+  // }
 
 }
